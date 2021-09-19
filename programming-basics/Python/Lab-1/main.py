@@ -2,7 +2,7 @@ from math import *
 
 
 def get_decimal_fractions(integer):
-    """Divides the number by decimal fractions
+    """Divides the number by decimal fractions.
         :param int integer: a number that needs to be transformed
         :return: list of fractions
 
