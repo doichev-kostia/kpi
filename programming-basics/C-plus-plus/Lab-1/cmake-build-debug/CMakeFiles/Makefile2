@@ -54,16 +54,16 @@ RM = /Applications/apps/CLion/ch-0/212.5080.54/CLion.app/Contents/bin/cmake/mac/
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/Kostia/Documents/Programming/kpi/ОП/C-plus-plus/Lab-1
+CMAKE_SOURCE_DIR = /Users/Kostia/Documents/Programming/kpi/programming-basics/C-plus-plus/Lab-1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/Kostia/Documents/Programming/kpi/ОП/C-plus-plus/Lab-1/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/Kostia/Documents/Programming/kpi/programming-basics/C-plus-plus/Lab-1/cmake-build-debug
 
 #=============================================================================
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/Lab_1.dir/all
+all: CMakeFiles/Lab-1.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -71,34 +71,34 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/Lab_1.dir/clean
+clean: CMakeFiles/Lab-1.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/Lab_1.dir
+# Target rules for target CMakeFiles/Lab-1.dir
 
 # All Build rule for target.
-CMakeFiles/Lab_1.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Lab_1.dir/build.make CMakeFiles/Lab_1.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Lab_1.dir/build.make CMakeFiles/Lab_1.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/Kostia/Documents/Programming/kpi/ОП/C-plus-plus/Lab-1/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target Lab_1"
-.PHONY : CMakeFiles/Lab_1.dir/all
+CMakeFiles/Lab-1.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Lab-1.dir/build.make CMakeFiles/Lab-1.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Lab-1.dir/build.make CMakeFiles/Lab-1.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/Kostia/Documents/Programming/kpi/programming-basics/C-plus-plus/Lab-1/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target Lab-1"
+.PHONY : CMakeFiles/Lab-1.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/Lab_1.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/Kostia/Documents/Programming/kpi/ОП/C-plus-plus/Lab-1/cmake-build-debug/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Lab_1.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/Kostia/Documents/Programming/kpi/ОП/C-plus-plus/Lab-1/cmake-build-debug/CMakeFiles 0
-.PHONY : CMakeFiles/Lab_1.dir/rule
+CMakeFiles/Lab-1.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/Kostia/Documents/Programming/kpi/programming-basics/C-plus-plus/Lab-1/cmake-build-debug/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Lab-1.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/Kostia/Documents/Programming/kpi/programming-basics/C-plus-plus/Lab-1/cmake-build-debug/CMakeFiles 0
+.PHONY : CMakeFiles/Lab-1.dir/rule
 
 # Convenience name for target.
-Lab_1: CMakeFiles/Lab_1.dir/rule
-.PHONY : Lab_1
+Lab-1: CMakeFiles/Lab-1.dir/rule
+.PHONY : Lab-1
 
 # clean rule for target.
-CMakeFiles/Lab_1.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Lab_1.dir/build.make CMakeFiles/Lab_1.dir/clean
-.PHONY : CMakeFiles/Lab_1.dir/clean
+CMakeFiles/Lab-1.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Lab-1.dir/build.make CMakeFiles/Lab-1.dir/clean
+.PHONY : CMakeFiles/Lab-1.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.
