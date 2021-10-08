@@ -14,6 +14,12 @@ def fact(number):
 
 
 def calculate_sinus(sin, iteration, sinArgument):
+    """
+    :param float sin: sinus
+    :param int iteration:
+    :param float sinArgument:
+    :return float : new sinus value
+    """
     sin_numerator = pow(-1, iteration) * pow(sinArgument, 2 * iteration + 1)
     return sin + sin_numerator / fact(2 * iteration + 1)
 
