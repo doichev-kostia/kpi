@@ -12,10 +12,10 @@ unsigned int fact(unsigned int number) {
 }
 
 int main() {
-    float difference;
-    float prevValue;
+    long double difference;
+    long double prevValue;
     float accuracy;
-    int sinArgument;
+    float sinArgument;
     int iteration = 0;
 
     cout << "Enter sinus argument: ";
@@ -24,13 +24,14 @@ int main() {
     cout << "Enter accuracy: ";
     cin >> accuracy;
 
-    float sin = sinArgument;
+    long double sin = sinArgument;
+    // sinus recursion formula: sin(x) = (-1)**n * x ** 2n + 1 / (2n + 1)!, where n goes from 0 to infinity
 
     do {
         prevValue = sin;
         iteration += 1;
-        float sinNumerator = pow(-1, iteration) * pow(sinArgument, 2 * iteration + 1);
-        sin += (float) sinNumerator / fact(2 * iteration + 1);
+        long double sinNumerator = pow(-1, iteration) * pow(sinArgument, 2 * iteration + 1);
+        sin += (long double) sinNumerator / fact(2 * iteration + 1);
         difference = abs(sin - prevValue);
     } while (difference > accuracy);
 
