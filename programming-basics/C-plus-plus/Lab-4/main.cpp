@@ -7,7 +7,7 @@ float transformCelsiusToFahrenheit(float temperature);
 
 int main() {
     float celsiusTemperature;
-    float accuracy;
+    float step;
 
     do {
         cout << "Enter the positive temperature in Celsius: ";
@@ -15,13 +15,13 @@ int main() {
     } while (celsiusTemperature < 0);
 
     do {
-        cout << "Enter the accuracy of temperature calculations: ";
-        cin >> accuracy;
-    } while (accuracy <= 0);
+        cout << "Enter the step of temperature calculations: ";
+        cin >> step;
+    } while (step <= 0);
 
     vector<vector<float> > temperatures;
 
-    for (float i = 0; i <= celsiusTemperature; i += accuracy) {
+    for (float i = 0; i <= celsiusTemperature; i += step) {
         float fahrenheit = transformCelsiusToFahrenheit((float) i);
         vector<float> values = {(float) i, fahrenheit};
         temperatures.push_back(values);
