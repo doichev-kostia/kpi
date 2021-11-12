@@ -3,7 +3,7 @@
 
 using namespace std;
 
-unsigned int fact(unsigned int number) {
+unsigned long long int fact(unsigned int number) {
     if (number <= 1) {
         return 1;
     }

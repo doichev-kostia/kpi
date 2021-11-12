@@ -1,15 +1,25 @@
 #include <iostream>
 
 using namespace std;
-bool calculateByFormula (int A, int B, int C, int D);
+
+void f1(int n);
+
+void f2(int m);
 
 int main() {
-    int numbers[] = {6, 7, 7, 14};
-    bool result = calculateByFormula(numbers[0], numbers[1], numbers[2], numbers[3]);
-    cout << "The result is: " << result << endl;
+    int i = 0;
+    f1(i);
+    cout << "i = " << i << endl;
     return 0;
 }
 
-bool calculateByFormula (int A, int B, int C, int D){
-   return (!(A == B) && (!(C != D)));
+void f1(int n) {
+    int x = n + 1;
+    f2(x);
+    cout << "x = " << x << endl;
+}
+
+void f2(int m) {
+    int y = m + 2;
+    cout << "y = " << y << endl;
 }
