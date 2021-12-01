@@ -72,5 +72,5 @@ int calcSecondArray(int item, int index) {
 }
 
 bool filterThirdArray(int item, int index) {
-    return item >= MIN_COMMON_VALUE;
+    return item > MIN_COMMON_VALUE;
 }
