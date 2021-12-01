@@ -3,6 +3,7 @@ import math
 def calculate_step(a, b, n):
     return (b - a) / n
 
+
 def calculate_sin (a, b, n):
     h = calculate_step(a, b, n)
     sum = 0
@@ -23,7 +24,8 @@ def calculate_arctg (a, b, n):
     func_sum = math.sin(math.pow(math.e, 10 * a)) + math.sin(math.pow(math.e, 10 * b))
     return h * (func_sum / 2 + sum)
 
-def calculate_integral(a,b,n):
+
+def calculate_integral(a, b, n):
     return calculate_arctg(a, b, n) + calculate_sin(0, math.pi, n)
 
 
