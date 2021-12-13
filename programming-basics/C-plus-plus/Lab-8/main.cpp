@@ -5,13 +5,17 @@
 #include <string>
 
 const int SIZE = 5;
+const int MIN_VALUE = -1000;
+const int MAX_VALUE = 1000;
+
 typedef int Matrix[SIZE][SIZE];
+
 using namespace std;
 
 template<typename T>
 void swapElements(T &a, T &b);
 
-int randomize_value(int min, int max);
+int randomizeValue(int min, int max);
 
 void fillMatrix(Matrix matrix, int (*callback)(int, int, int));
 
@@ -28,9 +32,6 @@ int findMiddleElement(Matrix matrix);
 void printMatrix(string name, Matrix matrix, int rows, int columns);
 
 string generateMatrixRow(int width, int columns, string content);
-
-const int MIN_VALUE = -1000;
-const int MAX_VALUE = 1000;
 
 int main() {
     srand(time(NULL));
@@ -49,7 +50,7 @@ int main() {
     return 0;
 }
 
-int randomize_value(int min, int max) {
+int randomizeValue(int min, int max) {
     return (rand() % (max - min + 1) + min);
 }
 
@@ -62,7 +63,7 @@ void fillMatrix(Matrix matrix, int (*callback)(int, int, int)) {
 }
 
 int fillMatrixA(int item, int row, int column) {
-    return randomize_value(MIN_VALUE, MAX_VALUE);
+    return randomizeValue(MIN_VALUE, MAX_VALUE);
 }
 
 void fillMatrixB(Matrix matrixA, Matrix matrixB, int size) {
@@ -81,15 +82,14 @@ void fillMatrixB(Matrix matrixA, Matrix matrixB, int size) {
 }
 
 void swapMatrixElements(Matrix matrix, int size) {
-    int middleIndex = (size / 2);
-    int rowLength = size / 2;
+    int middle = size / 2;
     for (int i = 0; i < size; i++) {
-        if (i < middleIndex) {
+        if (i < middle) {
             for (int j = 0; j <= i; j++) {
                 swapRowElements(matrix[i], size, j);
             }
-        } else if (i >= middleIndex) {
-            for (int j = rowLength; j < size; j++) {
+        } else if (i >= middle) {
+            for (int j = middle; j < size; j++) {
                 swapRowElements(matrix[i], size, j);
             }
         }
@@ -131,13 +131,12 @@ void printMatrix(string name, Matrix matrix, int rows, int columns) {
     cout << generateMatrixRow(CELL_WIDTH, columns, "-") << endl;
     for (int i = 0; i < rows; i++) {
         cout << "|";
-        for (int j = 0; j < SIZE; j++) {
+        for (int j = 0; j < columns; j++) {
             cout << setw(6) << matrix[i][j] << "|";
         }
         cout << endl;
         cout << generateMatrixRow(CELL_WIDTH, columns, "-") << endl;
     }
-
 }
 
 string generateMatrixRow(int width, int columns, string content) {
