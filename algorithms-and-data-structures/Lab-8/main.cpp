@@ -38,6 +38,7 @@ int main() {
     fillMatrix(matrix, fillMatrixCallback);
     fillArray(result, matrix);
     size_t size = sizeof(result) / sizeof(result[0]);
+    printArray(result, size);
     insertionSort(result, (int) size);
 
     cout << "Matrix: " << endl;
