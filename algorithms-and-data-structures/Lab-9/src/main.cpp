@@ -36,9 +36,12 @@ int main() {
     minElement.value = matrix[0][0];
     minElement.row = 0;
     minElement.column = 0;
+
     findMinElement(matrix, minElement);
     std::cout << "Min element: " << minElement.value << std::endl;
+
     swapElements(matrix[0][0], matrix[minElement.row][minElement.column]);
+
     std::cout << "Matrix" << std::endl;
     printMatrix(matrix);
 
