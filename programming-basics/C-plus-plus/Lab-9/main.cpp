@@ -9,7 +9,6 @@ typedef struct {
 } str;
 
 int main() {
-    const int MAXIMUM_CHARACTER_LENGTH = 256;
     char PUNCTUATION_MARKS[] = {'.', ',', ' ', ':', '?', '\''};
     size_t punctuationLength = sizeof(PUNCTUATION_MARKS) / sizeof(PUNCTUATION_MARKS[0]);
     str inputString;
@@ -26,13 +25,72 @@ int main() {
     inputString.length = inputString.value.length();
     characterGroup.length = characterGroup.value.length();
 
-    std::cout << inputString.value << std::endl;
+    int numberOfWords = 0;
 
-//    char *words = new std::string[1];
+    char *word;
+    int wordLength = 0;
+    for (int i = 0; i <= inputString.length; ++i) {
+        int currentCharacter = tolower(inputString.value[i]);
+
+        char *temporary;
+        if (wordLength != 0) {
+            temporary = new char[wordLength];
+            for (int j = 0; j < wordLength; ++j) {
+                temporary[j] = word[j];
+            }
+        }
+
+        bool isPunctuation = false;
+        for (int punctuation = 0; punctuation < punctuationLength; punctuation++) {
+            int punctuationCharacter = tolower(PUNCTUATION_MARKS[punctuation]);
+            if (currentCharacter == punctuationCharacter) {
+                isPunctuation = true;
+            }
+        }
+
+        if (wordLength != 0 && !isPunctuation) {
+            delete[] word;
+        }
+
+        word = new char[wordLength + 1];
+        if (wordLength > 0) {
+            for (int j = 0; j < wordLength; ++j) {
+                word[j] = temporary[j];
+            }
+            delete[] temporary;
+        }
+
+        if (isPunctuation || i == inputString.length) {
+            word[wordLength] = '\0';
+            for (int j = 0; j < wordLength; ++j) {
+                std::cout << word[j];
+            }
+            std::cout << "\n";
+            wordLength = 0;
+            delete[] word;
+        } else {
+            word[wordLength] = (char) currentCharacter;
+            ++wordLength;
+        }
+    }
+
+
+//    std::string test = "hello,world";
+//    char **newTestWord;
+//    size_t size = test.length();
 //    int wordLength = 0;
-//    int numberOfWords = 0;
-//    for (int i = 0; i < inputString.length; i++) {
-//        int currentCharacter = tolower(inputString.value[i]);
+//    for (int i = 0; i < size; ++i) {
+//
+//        char **temporary;
+//        if (wordLength != 0) {
+//            temporary = new char*[wordLength];
+//            for (int j = 0; j < wordLength; ++j) {
+//                *temporary[j] = *newTestWord[j];
+//            }
+
+//        }
+//        int currentCharacter = tolower(test[i]);
+//
 //        bool isPunctuation = false;
 //        for (int punctuation = 0; punctuation < punctuationLength; punctuation++) {
 //            int punctuationCharacter = tolower(PUNCTUATION_MARKS[punctuation]);
@@ -40,24 +98,42 @@ int main() {
 //                isPunctuation = true;
 //            }
 //        }
+
+//        if (i != 0 && !isPunctuation){
+//            delete[] newTestWord;
+//        }
 //
-//        if (!isPunctuation) {
-//            words[numberOfWords][wordLength] = (char) currentCharacter;
-//            wordLength++;
+//        if (!isPunctuation){
+//            ++wordLength;
+//            newTestWord = new char *[wordLength];
+//            if (wordLength > 1){
+//                for (int j = 0; j < wordLength - 1; ++j) {
+//                    *newTestWord[j] = *temporary[j];
+//                }
+//            }
+//            *(*(newTestWord + wordLength - 1)) = (char) currentCharacter;
 //        } else {
-//            numberOfWords++;
+//            std::cout << "The word is: ";
+//            for (int j = 0; j < wordLength; ++j) {
+//                std::cout << *newTestWord[j];
+//            }
+//            std::cout << "\n";
 //            wordLength = 0;
 //        }
 //    }
+//    char ** words;
 //
 //    for (int i = 0; i < numberOfWords; ++i) {
-//        size_t len = sizeof(words[i]) / sizeof(words[i][0]);
-//        for (int j = 0; j < len; ++j) {
-//            std::cout << words[i][j];
+//        if (i != 0){
+//            delete[] words;
 //        }
-//        std::cout << "\n";
-//    }
+//        char **word;
 //
+//        for (int j = 0; j < ; ++j) {
+//
+//        }
+//    }
+
     return 0;
 }
 
