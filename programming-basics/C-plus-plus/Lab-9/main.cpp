@@ -24,9 +24,11 @@ int main() {
     characterGroup.length = characterGroup.value.length();
     std::size_t foundIndex;
     std::string inputStringCopy = inputString.value;
+
     int numberOfSubtractions = 0;
     do {
         foundIndex = inputStringCopy.find(characterGroup.value);
+
         if (foundIndex != std::string::npos) {
             for (size_t i = foundIndex; i >= 0; --i) {
                 int currentCharacter = tolower(inputStringCopy[i]);
@@ -41,6 +43,7 @@ int main() {
             }
         }
     } while (foundIndex != std::string::npos);
+    std::cout << "Initial string: " << inputString.value << std::endl;
     std::cout << "Result: " << inputStringCopy << std::endl;
     std::cout << "Number of subtractions: " << numberOfSubtractions << std::endl;
 
