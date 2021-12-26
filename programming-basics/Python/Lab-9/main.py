@@ -12,3 +12,4 @@ number_of_deletions = len(words) - len(filtered_words)
 
 formatted_string = " ".join(filtered_words)
 print("Result: ", formatted_string)
+print(number_of_deletions, " word/s were deleted")
