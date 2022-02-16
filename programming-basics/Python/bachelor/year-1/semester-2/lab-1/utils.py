@@ -20,6 +20,13 @@ def fill_file(filename, mode, content):
     return file
 
 
+def retrieve_file_content(filename):
+    text = ""
+    with open(filename, 'r') as file:
+        text = file.read()
+    return text
+
+
 def filter_words(text, filtering_char, is_case_sensitive):
     filtered = []
     words = text.split()
