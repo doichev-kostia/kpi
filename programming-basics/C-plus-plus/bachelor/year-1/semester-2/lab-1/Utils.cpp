@@ -32,6 +32,21 @@ void fillFile(const string &filename, const string &mode, const string &content,
     file.close();
 }
 
+string retrieveFileContent(const string &filename){
+    string content;
+    ifstream file(filename);
+    if (!file.is_open()){
+        throw runtime_error("An error has occurred while changing the file");
+    }
+
+    while(!file.eof()){
+        string line;
+        getline(file, line);
+        content += line + '\n';
+    }
+    file.close();
+    return content;
+}
 
 
 string filterWords(const string& text, char filteringChar, bool isCaseSensitive){

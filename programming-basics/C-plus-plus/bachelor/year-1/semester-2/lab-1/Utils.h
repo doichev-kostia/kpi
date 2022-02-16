@@ -19,5 +19,5 @@ string getInput(const char &terminatingKey);
 string getInput(int terminatingKey);
 void fillFile(const string &filename, const string &mode, const string &content, const string & APPEND_MODE);
 string filterWords(const string& text, char filteringChar, bool isCaseSensitive);
-
+string retrieveFileContent(const string &filename);
 #endif //LAB_1_UTILS_H

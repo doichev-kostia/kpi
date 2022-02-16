@@ -1,8 +1,4 @@
 
-Hello world
-how are you?
-nice to c u HeRe
-
-Hello, world
-how r u
-nice to c u here
+hello world
+how are u
+c u here

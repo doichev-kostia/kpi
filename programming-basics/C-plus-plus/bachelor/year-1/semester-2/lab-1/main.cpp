@@ -29,12 +29,23 @@ int main() {
         cin >> inputMode;
     } while (inputMode != APPEND_MODE && inputMode != TRUNCATE_MODE);
 
-    fillFile(inputFilename, inputMode, input, APPEND_MODE);
+    try {
+        fillFile(inputFilename, inputMode, input, APPEND_MODE);
+    } catch (runtime_error error) {
+        cout << "Runtime error: " << error.what() << endl;
+    }
+
+    string content;
+    try {
+        content = retrieveFileContent(inputFilename);
+    } catch (runtime_error error) {
+        cout << "Runtime error: " << error.what() << endl;
+    }
 
     cout << "The file has been modified! Open " << inputFilename << endl;
 
     cout << "---------------------------------------------------------------------------" << endl;
-    cout << "Input: " << input << endl;
+    cout << "Input: " << content << endl;
     cout << "---------------------------------------------------------------------------" << endl;
 
     char searchingCharacter;
@@ -59,7 +70,7 @@ int main() {
         cin >> outputMode;
     } while (outputMode != APPEND_MODE && outputMode != TRUNCATE_MODE);
 
-    string filteredWords = filterWords(input, searchingCharacter, isCaseSensitive);
+    string filteredWords = filterWords(content, searchingCharacter, isCaseSensitive);
     fillFile(outputFilename, outputMode, filteredWords, APPEND_MODE);
     cout << "The file has been modified! Open " << outputFilename << endl;
 
