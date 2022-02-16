@@ -9,11 +9,12 @@ int main() {
     const string TRUNCATE_MODE = "t";
     const string YES = "y";
     const string NO = "n";
+    char terminatingKey;
+    cout << "Enter the terminating key: ";
+    cin >> terminatingKey;
 
     cout << "Enter the text: ";
-    string input = getInput(']');
-
-    cout << "Input text: " << input << endl;
+    string input = getInput(terminatingKey);
 
     string inputFilename;
     do {

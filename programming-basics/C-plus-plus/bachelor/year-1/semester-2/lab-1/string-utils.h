@@ -16,3 +16,4 @@
 using namespace std;
 vector<string> split(string text, const string &divider);
 string toLowerCase(const string &str);
+string replaceAll (string str, const string &substring, const string &newSubstring);

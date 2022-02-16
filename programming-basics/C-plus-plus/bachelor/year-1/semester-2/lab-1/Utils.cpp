@@ -36,7 +36,8 @@ void fillFile(const string &filename, const string &mode, const string &content,
 
 string filterWords(const string& text, char filteringChar, bool isCaseSensitive){
     string filtered;
-    vector<string> words = split(text, " ");
+    string modified = replaceAll(text, "\n", " ");
+    vector<string> words = split(modified, " ");
     for (string word : words) {
         string currentWord = word;
         char currentChar = filteringChar;
@@ -44,8 +45,9 @@ string filterWords(const string& text, char filteringChar, bool isCaseSensitive)
             currentWord = toLowerCase(word);
             currentChar = (char) tolower(filteringChar);
         }
+
         if (currentWord[0] == currentChar){
-            filtered.append(currentWord + " ");
+            filtered.append(word + " ");
         }
     }
     return filtered;

@@ -28,3 +28,14 @@ string toLowerCase(const string &str){
     }
     return lower;
 }
+
+string replaceAll (string str, const string &substring, const string &newSubstring) {
+    string copy = str;
+    size_t position = 0;
+    size_t substringLength = substring.length();
+    while ((position = copy.find(substring)) != string::npos) {
+        copy.replace(position, substringLength, newSubstring);
+    }
+
+    return copy;
+}
