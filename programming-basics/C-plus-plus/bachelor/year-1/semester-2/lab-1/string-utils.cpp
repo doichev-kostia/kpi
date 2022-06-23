@@ -24,6 +24,7 @@ string toLowerCase(const string &str){
     size_t strLength = str.length();
     string lower;
     for (size_t i = 0; i < strLength; ++i) {
+        // врахувати числа
         lower.push_back((char) tolower(str[i]));
     }
     return lower;

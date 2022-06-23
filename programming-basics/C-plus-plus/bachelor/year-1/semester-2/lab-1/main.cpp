@@ -14,7 +14,7 @@ int main() {
     cin >> terminatingKey;
 
     cout << "Enter the text: ";
-    string input = getInput(terminatingKey);
+    string input = getInput(24);
 
     string inputFilename;
     do {
