@@ -4,8 +4,6 @@
 #include <cmath>
 #include <string>
 
-#include "StringUtilities.h"
-
 class Numeral_8 {
     int number;
 public:

@@ -5,7 +5,7 @@ using namespace std;
 
 int main() {
     int assignmentNumber = 0;
-    cout << "Enter assignment number: ";
+    cout << "Enter assignment number in decimal: ";
     cin >> assignmentNumber;
 
     Numeral_8 n1(10);

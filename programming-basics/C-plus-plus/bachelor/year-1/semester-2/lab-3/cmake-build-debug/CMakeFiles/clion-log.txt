@@ -1,4 +1,4 @@
-"/Users/panenco/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/221.5787.29/CLion.app/Contents/bin/cmake/mac/bin/cmake" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=/Users/panenco/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/221.5787.29/CLion.app/Contents/bin/ninja/mac/ninja" -G Ninja -S /Users/panenco/CLionProjects/labs/lab-3 -B /Users/panenco/CLionProjects/labs/lab-3/cmake-build-debug
--- Configuring done
--- Generating done
--- Build files have been written to: /Users/panenco/CLionProjects/labs/lab-3/cmake-build-debug
+Cannot generate into /Users/Kostia/Documents/Programming/kpi/programming-basics/C-plus-plus/bachelor/year-1/semester-2/lab-3/cmake-build-debug
+This directory is already used for 'Debug' profile
+
+Please either delete it manually or select another generation directory

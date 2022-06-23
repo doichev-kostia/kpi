@@ -1,4 +1,4 @@
-# Install script for directory: /Users/panenco/CLionProjects/labs/lab-3
+# Install script for directory: /Users/Kostia/Documents/Programming/kpi/programming-basics/C-plus-plus/bachelor/year-1/semester-2/lab-3
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/panenco/CLionProjects/labs/lab-3/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/Kostia/Documents/Programming/kpi/programming-basics/C-plus-plus/bachelor/year-1/semester-2/lab-3/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
