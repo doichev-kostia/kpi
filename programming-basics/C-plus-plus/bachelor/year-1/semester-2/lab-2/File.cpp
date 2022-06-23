@@ -1,6 +1,5 @@
 #include "File.h"
 
-
 File::File(string fileName){
     this->name = fileName;
 }

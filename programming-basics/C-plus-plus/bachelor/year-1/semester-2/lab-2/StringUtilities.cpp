@@ -1,7 +1,3 @@
-//
-// Created by Panenco on 15.05.2022.
-//
-
 #include "StringUtilities.h"
 
 std::vector<std::string> StringUtilities::split(std::string text, const std::string &divider) {

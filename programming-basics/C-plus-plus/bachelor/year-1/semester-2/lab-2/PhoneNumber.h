@@ -6,11 +6,15 @@
 #include <vector>
 
 class PhoneNumber {
-public:
     std::string number;
+public:
+    PhoneNumber();
     PhoneNumber(std::string number);
+
+    std::string getNumber();
+
+private:
     bool isValid();
-    int getDigitsSum();
 };
 
 

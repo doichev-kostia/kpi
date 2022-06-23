@@ -17,19 +17,25 @@ int main() {
         }
     } catch (std::exception &e) {
         std::cout << e.what() << std::endl;
+        return 1;
+    }
+
+    if (subscribers.empty()) {
+        cout << "No subscribers" << endl;
+        return 1;
     }
 
     Subscriber subscriberWithTheBiggestPhoneNumberSum = subscribers[0];
     for (Subscriber subscriber: subscribers) {
-        int sum = subscriber.phoneNumber.getDigitsSum();
-        if (sum > subscriberWithTheBiggestPhoneNumberSum.phoneNumber.getDigitsSum()) {
+        int sum = subscriber.getDigitsSum();
+        if (sum > subscriberWithTheBiggestPhoneNumberSum.getDigitsSum()) {
             subscriberWithTheBiggestPhoneNumberSum = subscriber;
         }
     }
 
     std::cout << subscriberWithTheBiggestPhoneNumberSum.fullName
               << "'s  phone number has the biggest sum of digits, which is "
-              << subscriberWithTheBiggestPhoneNumberSum.phoneNumber.getDigitsSum() << std::endl;
+              << subscriberWithTheBiggestPhoneNumberSum.getDigitsSum() << std::endl;
 
 
     return 0;
