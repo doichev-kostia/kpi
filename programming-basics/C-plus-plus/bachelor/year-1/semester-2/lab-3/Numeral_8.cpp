@@ -33,22 +33,24 @@ int Numeral_8::getDecimal() {
         decimal += (int) pow(8, i) * (octal % 10);
         octal /= 10;
     }
-
+    cout << this->number << " (base 8) = " << decimal << " (base 10)" << endl;
     return decimal;
 }
 
 int Numeral_8::convertDecimalToOctal(int decimal) {
+    int decimalMutable = decimal;
     int remainder;
     int octal = 0;
     int decimalPlace = 1;
 
-    while (decimal != 0) {
-        remainder = decimal % 8;
-        decimal = decimal / 8;
+    while (decimalMutable != 0) {
+        remainder = decimalMutable % 8;
+        decimalMutable = decimalMutable / 8;
         octal = octal + (remainder * decimalPlace);
         decimalPlace *= 10;
     }
 
+    cout << decimal << " (base 10) = " << octal << " (base 8)" << endl;
     return octal;
 }
 

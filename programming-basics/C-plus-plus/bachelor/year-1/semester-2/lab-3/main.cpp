@@ -8,27 +8,27 @@ int main() {
     cout << "Enter assignment number in decimal: ";
     cin >> assignmentNumber;
 
+    cout << "INIT" << endl;
     Numeral_8 n1(10);
     Numeral_8 n2("100");
     Numeral_8 n3(10, 10);
 
-    cout << "INIT" << endl;
-    cout << n1.getNumber() << endl;
-    cout << n2.getNumber() << endl;
-    cout << n3.getNumber() << endl;
-    cout << "INIT END" << endl;
+    cout << "N1: " << n1.getNumber() << endl;
+    cout << "N2: " << n2.getNumber() << endl;
+    cout << "N3: " << n3.getNumber() << endl;
+    cout << "INIT END\n\n" << endl;
 
-    ++n1;
     cout << "INCREMENT" << endl;
-    cout << n1.getNumber() << endl;
+    ++n1;
+    cout << "Result: " << n1.getNumber() << endl;
 
+    cout << "\n\nADD" << endl;
     n2 += assignmentNumber;
-    cout << "ADD" << endl;
-    cout << n2.getNumber() << endl;
+    cout << "Result: " << n2.getNumber() << endl;
 
+    cout << "\n\nADD TWO OCTALS" << endl;
     n3 = n1 + n2;
-    cout << "ADD TWO OCTALS" << endl;
-    cout << n3.getNumber() << endl;
+    cout << "Result: " << n3.getNumber() << endl;
 
     return 0;
 }

@@ -1,6 +1,7 @@
 #ifndef LAB_3_NUMERAL_8_H
 #define LAB_3_NUMERAL_8_H
 
+#include <iostream>
 #include <cmath>
 #include <string>
 
