@@ -8,7 +8,7 @@
 
 Курс: *1 бакалавр*
 
-[Звіт з лабораторною роботою ](./asd-lab-6.pdf)
+[Звіт з лабораторною роботою ](asd-lab-6.pdf)
 
 При некоректному відображенні натисніть на [посилання](https://docs.google.com/document/d/14xJJnUJekDdVtTW-xIX_b0Q1Q8f6MM5C90XXNvexSy8/edit?usp=sharing) аби відкрити звіт в Google Docs
 

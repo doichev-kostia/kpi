@@ -8,8 +8,8 @@
 
 Курс: *1 бакалавр*
 
-[Звіт з лабораторною роботою ](./ads-lab-5.pdf)
+[Звіт з лабораторною роботою ](ads-lab-5.pdf)
 
 При некоректному відображенні натисніть на [посилання](https://docs.google.com/document/d/12k3xpPYlDRCBtYe6dCFBaZJSN3IE0Dg5E66sm8JwO-E/edit?usp=sharing) аби відкрити звіт в Google Docs
 
- В папці **[assets](./assets/diagram.png)** знаходится блок схема алгоритму
+ В папці **[assets](assets/diagram.png)** знаходится блок схема алгоритму
