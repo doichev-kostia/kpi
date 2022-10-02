@@ -5,10 +5,13 @@
   "license": "MIT",
   "scripts": {
     "start": "cross-env NODE_PATH=./build node -r source-map-support/register build/main.js ",
-    "create-file": "node build/scripts/create-intial-file.js --file data.bin --min 1 --max 1000000",
+    "start:container": "docker compose up -d",
+    "create-file:default": "node build/scripts/create-initial-file.js --file files/data.bin --min 1 --max 1000000",
+    "create-file": "node build/scripts/create-initial-file.js",
     "build": "tsc",
     "watch": "tsc -w",
-    "build:clean": "rimraf build"
+    "build:clean": "rimraf build",
+    "docker:build": "docker build -t lab-1 ."
   },
   "devDependencies": {
     "@types/node": "16.11.54",

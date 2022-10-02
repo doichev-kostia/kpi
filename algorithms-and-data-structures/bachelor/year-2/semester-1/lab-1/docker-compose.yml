@@ -1,0 +1,14 @@
+version: '3.9'
+services:
+  lab-1:
+    image: lab-1
+    deploy:
+      resources:
+        limits:
+          memory: 4GB
+    command: ['/bin/sh', '-c', 'yarn create-file --file files/data.bin --min 1 --max 1000 && yarn start']
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./files:/app/files
