@@ -6,8 +6,8 @@ WORKDIR /app
 
 # Install app dependencies
 COPY . /app
-RUN yarn install
+RUN pnpm install
 
 # Bundle app source
 COPY . /app
-RUN yarn build:clean && yarn build
+RUN pnpm build:clean && pnpm build

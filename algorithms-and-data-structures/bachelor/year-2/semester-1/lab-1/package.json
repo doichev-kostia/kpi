@@ -4,9 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "cross-env NODE_PATH=./build node -r source-map-support/register build/main.js ",
+    "start": "cross-env NODE_PATH=./build node --max-old-space-size=8000 -r source-map-support/register build/main.js ",
     "start:container": "docker compose up -d",
-    "create-file:default": "node build/scripts/create-initial-file.js --file files/data.bin --min 1 --max 1000000",
+    "create-file:default": "node build/scripts/create-initial-file.js --file files/data.bin --size 1073741824 --min 1 --max 1000000",
     "create-file": "node build/scripts/create-initial-file.js",
     "build": "tsc",
     "watch": "tsc -w",
