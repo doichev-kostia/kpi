@@ -23,9 +23,9 @@ const argv = yargs(hideBin(process.argv))
         max: {type: "number", default: 1000, description: "Max integer"},
     })
     .check(({size, min, max}) => {
-        if (size < MIN_FILE_SIZE_IN_BYTES) {
-            throw new Error(`File size should be at least ${MIN_FILE_SIZE_IN_BYTES} bytes`);
-        }
+        // if (size < MIN_FILE_SIZE_IN_BYTES) {
+        //     throw new Error(`File size should be at least ${MIN_FILE_SIZE_IN_BYTES} bytes`);
+        // }
         if (min > max) {
             throw new Error("Min should be less than max");
         }

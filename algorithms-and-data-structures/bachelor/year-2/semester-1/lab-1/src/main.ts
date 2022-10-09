@@ -1,92 +1,133 @@
 import path from "path";
 import fs from "fs";
-import * as process from "process";
 
 // const MAX_BUFFER_SIZE_IN_BYTES = 20 * 1024 * 1024;
 const file = path.join(__dirname, "../files/data.bin");
 // const output = path.join(__dirname, "../files/output.bin");
 
-const sortExternally = (initialFilePath: string, tmpDirPath: string) => {
-    const readStream = fs.createReadStream(initialFilePath);
-    const firstHalfWriteStream = fs.createWriteStream(path.join(tmpDirPath, 'a.bin'), {flags: "w", encoding: "binary"});
-    const secondHalfWriteStream = fs.createWriteStream(path.join(tmpDirPath, 'b.bin'), {
-        flags: "w",
-        encoding: "binary"
-    });
+// init:  [33, 48, 24, 20, 20, 8, 33, 22, 46, 16, 29, 8, 24, 17, 5, 39, 31, 47, 44, 4]
+// final: [4, 5, 8, 8, 16, 17, 20, 20, 22, 24, 24, 29, 31, 33, 33, 39, 44, 46, 47, 48]
 
+const getClosestFibonacciSequence = (number: number) => {
+    let first = 0;
+    let second = 1;
+    let final = 1;
+    while (final < number) {
+        first = second;
+        second = final;
+        final = first + second;
+    }
 
-    readStream.on("data", (chunk) => {
-        const data = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk, "binary");
-        const array = new Int32Array(data.buffer);
-        const a = array.filter((value) => value % 2 === 0);
-        const b = array.filter((value) => value % 2 !== 0);
-        firstHalfWriteStream.write(Buffer.from(a.buffer));
-        secondHalfWriteStream.write(Buffer.from(b.buffer));
-    })
+    return {
+        first,
+        second,
+        final
+    };
+}
 
-    readStream.on("end", () => {
-        secondHalfWriteStream.end();
-        firstHalfWriteStream.end();
-    });
-
-    const firstHalfReadStream = fs.createReadStream(path.join(tmpDirPath, 'a.bin'));
-    const secondHalfReadStream = fs.createReadStream(path.join(tmpDirPath, 'b.bin'));
-
-    const outputWriteStream = fs.createWriteStream(initialFilePath, {flags: "w", encoding: "binary"});
-    let firstHalfBuffer: Buffer | null = null;
-    let secondHalfBuffer: Buffer | null = null;
-
-    firstHalfReadStream.on("data", (chunk) => {
-        firstHalfBuffer = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk, "binary");
-    })
-
-    secondHalfReadStream.on("data", (chunk) => {
-        secondHalfBuffer = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk, "binary");
-    });
-
-    firstHalfReadStream.on("data", (chunk) => {
-        const data = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk, "binary");
-        const arr = new Int32Array(data.buffer);
-
-        secondHalfReadStream.on("data", (chunk) => {
-            const data = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk, "binary");
-            const barr = new Int32Array(data.buffer);
-            const final = new Int32Array(arr.length + barr.length);
-            let ptr = 0;
-
-            for (let i = 0; i < arr.length; i++) {
-                if (arr[i] < barr[i]) {
-                    final[ptr] = arr[i];
-                    ++ptr;
-                    final[ptr] = barr[i];
-                } else {
-                    final[ptr] = barr[i];
-                    ++ptr;
-                    final[ptr] = arr[i];
-                }
+const getChunks = (integers: number[]) => {
+    const chunks: number[][] = [];
+    let tmp: number[] = [];
+    for (let i = 0; i < integers.length - 1; i++) {
+        const isLast = i === integers.length - 2;
+        tmp.push(integers[i]);
+        if (integers[i] > integers[i + 1]) {
+            chunks.push(tmp);
+            tmp = [];
+            if (isLast) {
+                chunks.push([integers[i + 1]]);
             }
+        }
 
-            console.log({
-                arr,
-                barr,
-                final
-            })
-            outputWriteStream.write(Buffer.from(final.buffer));
-        })
-    })
+        if (isLast && integers[i] < integers[i + 1]) {
+            tmp.push(integers[i + 1]);
+            chunks.push(tmp);
+        }
+    }
+    return chunks;
+}
+
+const sortExternally = async (initialFilePath: string, tmpDirPath: string) => {
+    const data = await fs.promises.readFile(initialFilePath);
+    const integers = Array.from(new Int32Array(data.buffer));
+    const firstFilePath = path.join(tmpDirPath, 'first.bin');
+    const secondFilePath = path.join(tmpDirPath, 'second.bin');
+    const finalFilePath = path.join(tmpDirPath, 'final.bin');
+    const chunks = getChunks(integers);
+
+    console.log(`Number of chunks: ${chunks.length}`);
+
+    const {first, second, final} = getClosestFibonacciSequence(chunks.length);
+    const firstFileContent = chunks.slice(0, first).flat();
+    await fs.promises.writeFile( firstFilePath, Buffer.from(Int32Array.from(firstFileContent).buffer), {
+        encoding: 'binary',
+        flag: 'w'
+    });
+    const secondFileContent = chunks.slice(first).flat();
+    await fs.promises.writeFile(secondFilePath, Buffer.from(Int32Array.from(secondFileContent).buffer), {
+        encoding: 'binary',
+        flag: 'w'
+    });
+
+    const firstFileBuffer = await fs.promises.readFile(firstFilePath);
+    const firstFileIntegers = Array.from(new Int32Array(firstFileBuffer.buffer));
+    const secondFileBuffer = await fs.promises.readFile(secondFilePath);
+    const secondFileIntegers = Array.from(new Int32Array(secondFileBuffer.buffer));
+
+
+    const firstChunks: number[][] = getChunks(firstFileIntegers);
+    const secondChunks: number[][] = getChunks(secondFileIntegers);
+
+    const delta = firstChunks.length - secondChunks.length;
+
+    const finalChunks: number[][] = [];
+    let iterableChunks: number[][] = firstChunks;
+    if (delta > 0) {
+        iterableChunks = secondChunks;
+    }
+
+    for (let i = 0; i < iterableChunks.length; i++) {
+        const firstChunk = firstChunks[i];
+        const secondChunk = secondChunks[i];
+        finalChunks.push([...firstChunk, ...secondChunk].sort((a, b) => a - b));
+    }
+
+    if (delta > 0) {
+        const buffer = Buffer.from(new Int32Array(firstChunks.slice(iterableChunks.length).flat()).buffer);
+        await fs.promises.writeFile(firstFilePath, buffer, { encoding: 'binary', flag: 'w' });
+        // tmp
+        await fs.promises.writeFile(secondFilePath, Buffer.from(new Int32Array(0).buffer), { encoding: 'binary', flag: 'w' });
+    } else if (delta < 0) {
+       const buffer = Buffer.from(new Int32Array(secondChunks.slice(iterableChunks.length).flat()).buffer);
+       await fs.promises.writeFile(secondFilePath, buffer, { encoding: 'binary', flag: 'w' });
+
+        // tmp
+        await fs.promises.writeFile(firstFilePath, Buffer.from(new Int32Array(0).buffer), { encoding: 'binary', flag: 'w' });
+    }
+
+    const finalFileContent = finalChunks.flat();
+    console.log({integers, finalFileContent});
+    await fs.promises.writeFile(path.join(tmpDirPath, 'final.bin'), Buffer.from(Int32Array.from(finalFileContent).buffer));
 }
 
 export const main = async (filePath: string) => {
     const fileStats = await fs.promises.stat(filePath);
     const fileSize = fileStats.size;
-    const tmp = await fs.promises.mkdir(path.join(__dirname, "../files/tmp"), {recursive: true});
+    const tmp = await (async () => {
+        try {
+            await fs.promises.access(path.join(__dirname, '../files/tmp'));
+            return path.join(__dirname, '../files/tmp');
+        } catch (_) {
+            await fs.promises.mkdir(path.join(__dirname, "../files/tmp"), {recursive: true});
+        }
+    })();
 
     if (!tmp) {
         console.error("Failed to create tmp directory");
         process.exit(1);
     }
 
-    sortExternally(filePath, tmp);
+    await sortExternally(filePath, tmp);
 }
 
 main(file);
