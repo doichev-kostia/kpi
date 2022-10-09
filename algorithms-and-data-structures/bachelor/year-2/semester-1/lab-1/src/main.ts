@@ -118,7 +118,6 @@ const sortExternally = async (initialFilePath: string, tmpDirPath: string) => {
             const buffer = Buffer.from(new Int32Array(firstChunks.slice(iterableChunks.length).flat()).buffer);
             await fs.promises.writeFile(firstFilePath, buffer, {encoding: 'binary', flag: 'w'});
 
-            // tmp
             emptyFilePath = secondFilePath;
             await fs.promises.writeFile(secondFilePath, Buffer.from(new Int32Array(0).buffer), {
                 encoding: 'binary',
@@ -128,7 +127,6 @@ const sortExternally = async (initialFilePath: string, tmpDirPath: string) => {
             const buffer = Buffer.from(new Int32Array(secondChunks.slice(iterableChunks.length).flat()).buffer);
             await fs.promises.writeFile(secondFilePath, buffer, {encoding: 'binary', flag: 'w'});
 
-            // tmp
             emptyFilePath = firstFilePath;
             await fs.promises.writeFile(firstFilePath, Buffer.from(new Int32Array(0).buffer), {
                 encoding: 'binary',
