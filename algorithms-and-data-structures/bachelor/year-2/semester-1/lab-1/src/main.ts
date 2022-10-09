@@ -107,7 +107,7 @@ const sortExternally = async (initialFilePath: string, tmpDirPath: string) => {
 
     const finalFileContent = finalChunks.flat();
     console.log({integers, finalFileContent});
-    await fs.promises.writeFile(path.join(tmpDirPath, 'final.bin'), Buffer.from(Int32Array.from(finalFileContent).buffer));
+    await fs.promises.writeFile(finalFilePath, Buffer.from(Int32Array.from(finalFileContent).buffer));
 }
 
 export const main = async (filePath: string) => {
