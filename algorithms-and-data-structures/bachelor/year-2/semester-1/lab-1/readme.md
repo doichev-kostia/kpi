@@ -12,6 +12,12 @@ A binary file with i32 integers
 
 A sorted binary file with i32 integers
 
+## Preparations
+
+1. Install [nodejs](https://nodejs.org/en/) v16
+2. Install [pnpm](https://pnpm.io/) v7
+3. Install the dependencies with `pnpm install`
+
 ## Instructions
 
 1. Create a binary file with the capacity of 10 MB 
