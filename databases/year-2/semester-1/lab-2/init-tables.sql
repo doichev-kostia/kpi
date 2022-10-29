@@ -1,15 +1,13 @@
-create table address (
+create table if not exists address (
     id uuid primary key default gen_random_uuid(),
     country varchar(70) not null,
     city varchar(90) not null,
     street varchar(120) not null,
     house_number varchar(20) not null,
-    flat_number varchar(20),
-    index int,
-    zip_code int
+    flat_number varchar(20)
 );
 
-create table school (
+create table if not exists school (
     id uuid primary key default gen_random_uuid(),
     "name" varchar(100) not null,
     address_id uuid not null,
@@ -18,13 +16,13 @@ create table school (
             references address(id)
 );
 
-create table author (
+create table if not exists author (
     id uuid primary key default gen_random_uuid(),
-    first_name varchar(60) not null,
-    last_name varchar(60) not null
+    first_name text not null,
+    last_name text not null
 );
 
-create table book (
+create table if not exists book (
     id uuid primary key default gen_random_uuid(),
     "name" varchar(120) not null,
     published_at smallint not null,
@@ -34,7 +32,7 @@ create table book (
             references author(id)
 );
 
-create table classroom (
+create table if not exists classroom (
     id uuid primary key default gen_random_uuid(),
     "name" varchar(50) not null,
     number int not null,
@@ -44,7 +42,7 @@ create table classroom (
             references school(id)
 );
 
-create table class (
+create table if not exists class (
     id uuid primary key default gen_random_uuid(),
     "name" varchar(50) not null,
     classroom_id uuid,
@@ -57,7 +55,7 @@ create table class (
             references school(id)
 );
 
-create table "user" (
+create table if not exists "user" (
     id uuid primary key default gen_random_uuid(),
     first_name varchar(60) not null,
     last_name varchar(60) not null
@@ -65,7 +63,7 @@ create table "user" (
 
 
 
-create table role (
+create table if not exists role (
     id uuid primary key default gen_random_uuid(),
     type varchar(50) not null,
     user_id uuid not null,
@@ -82,7 +80,7 @@ create table role (
             references class(id)
 );
 
-create table subject (
+create table if not exists subject (
     id uuid primary key default gen_random_uuid(),
     credits real not null,
     "name" varchar(100) not null,
@@ -96,19 +94,15 @@ create table subject (
             references book(id)
 );
 
-create table event (
+create table if not exists event (
     id uuid primary key default gen_random_uuid(),
     class_id uuid,
-    book_id uuid,
     role_id uuid,
     classroom_id uuid,
     subject_id uuid,
     constraint fk_class
         foreign key(class_id)
             references class(id),
-    constraint fk_book
-        foreign key(book_id)
-            references book(id),
     constraint fk_role
         foreign key(role_id)
             references role(id),
