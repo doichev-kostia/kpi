@@ -45,7 +45,7 @@ create table if not exists "classroom" (
 create table if not exists "class" (
     "id" uuid primary key default gen_random_uuid(),
     "name" varchar(50) not null,
-    "classroom_id" uuid,
+    "classroom_id" uuid, -- should be from the same school
     "school_id" uuid not null,
     constraint fk_classroom
         foreign key("classroom_id")
