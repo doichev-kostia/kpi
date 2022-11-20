@@ -75,7 +75,7 @@ create table if not exists "role" (
     constraint fk_school
         foreign key("school_id")
             references "school"("id"),
-    constraint fk_class
+    constraint fk_class -- should be from the same school
         foreign key("class_id")
             references "class"("id")
 );
@@ -84,11 +84,7 @@ create table if not exists "subject" (
     "id" uuid primary key default gen_random_uuid(),
     "credits" real not null,
     "name" varchar(100) not null,
-    "role_id" uuid not null,
     "book_id" uuid not null,
-    constraint fk_role
-        foreign key("role_id")
-            references "role"("id"),
     constraint fk_book
         foreign key("book_id")
             references "book"("id")
@@ -97,8 +93,8 @@ create table if not exists "subject" (
 create table if not exists "event" (
     "id" uuid primary key default gen_random_uuid(),
     "class_id" uuid,
-    "role_id" uuid,
-    "classroom_id" uuid,
+    "role_id" uuid, -- teacher should be from the same school as the class
+    "classroom_id" uuid, -- should be from the same school as the class
     "subject_id" uuid,
     constraint fk_class
         foreign key("class_id")

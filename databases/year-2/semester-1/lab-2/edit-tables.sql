@@ -27,3 +27,6 @@ add constraint fk_book foreign key ("book_id") references "book"("id");
 
 
 
+alter table "role"
+add column "subject_id" uuid,
+add constraint fk_subject foreign key ("subject_id") references "subject"("id");
