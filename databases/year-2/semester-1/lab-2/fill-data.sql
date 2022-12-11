@@ -90,26 +90,26 @@ insert into "book" ("id", "name", "published_at", "author_id") values ('ba14c948
 
 -- SUBJECT
 
-insert into "subject" ("id", "credits", "name") values ('fb257f25-03e4-4339-be7c-bd1df01a4a86', 97.6, 'Mort');
-insert into "subject" ("id", "credits", "name") values ('6ca986ba-ba22-448b-8273-449091cdb5f0', 97.0, 'Tiena');
-insert into "subject" ("id", "credits", "name") values ('f31dce9e-36f8-4184-b692-dfad03c83816', 93.3, 'Merline');
-insert into "subject" ("id", "credits", "name") values ('5144a134-4d66-4081-951b-fa00f498e490', 83.9, 'Adele');
-insert into "subject" ("id", "credits", "name") values ('c80d4996-2bb4-48c5-b88d-b933108ffa02', 30.3, 'Hewe');
-insert into "subject" ("id", "credits", "name") values ('80e4c4ff-347c-4714-aecd-61a2b8ae5945', 14.9, 'Wilbur');
-insert into "subject" ("id", "credits", "name") values ('a364ba9c-9078-4679-b098-bd151bb86afa', 55.2, 'Sanders');
-insert into "subject" ("id", "credits", "name") values ('53f03d14-b63c-49c6-a626-754650f03667', 61.8, 'Rea');
-insert into "subject" ("id", "credits", "name") values ('fac2890e-87b4-4e5b-8324-e7bca27465af', 5.2, 'Iseabal');
-insert into "subject" ("id", "credits", "name") values ('2dfab516-dc73-490a-9cc0-fad8ca08f367', 51.3, 'Goran');
-insert into "subject" ("id", "credits", "name") values ('284adc94-1c89-40d2-8af6-f3c1aae13efd', 61.0, 'Ralph');
-insert into "subject" ("id", "credits", "name") values ('815155d5-c901-4a25-ba8d-e2c30b7c8441', 35.8, 'Abey');
-insert into "subject" ("id", "credits", "name") values ('63ec8791-e2b3-43b3-bca3-e43193a8d052', 41.5, 'Gal');
-insert into "subject" ("id", "credits", "name") values ('a6388b00-af6f-483c-b891-cd6181adad3b', 89.4, 'Geno');
-insert into "subject" ("id", "credits", "name") values ('57eea28e-47e2-4113-8193-a3e9f60d16f7', 2.0, 'Cecily');
-insert into "subject" ("id", "credits", "name") values ('c4e51a55-22cf-4930-82c8-4a2b3534cd2e', 17.1, 'Johannes');
-insert into "subject" ("id", "credits", "name") values ('0b6b0a20-4551-4200-bfec-eb4c713650ec', 40.0, 'Madelon');
-insert into "subject" ("id", "credits", "name") values ('7c505172-571a-48b2-b9e9-062665c404d7', 36.2, 'Vivian');
-insert into "subject" ("id", "credits", "name") values ('3cfe6079-ab35-4604-9838-89e251d117ce', 23.6, 'Federica');
-insert into "subject" ("id", "credits", "name") values ('26d03e5e-31e2-4734-b564-65c26c52f39b', 20.0, 'Lira');
+insert into "subject" ("id", "credits", "name", "book_id") values ('fb257f25-03e4-4339-be7c-bd1df01a4a86', 97.6, 'Mort', '78351623-63b0-4cbe-84de-b8638cab8c13');
+insert into "subject" ("id", "credits", "name", "book_id") values ('6ca986ba-ba22-448b-8273-449091cdb5f0', 97.0, 'Tiena', '1c732db7-de81-476e-82e7-4ac87dc91d89');
+insert into "subject" ("id", "credits", "name", "book_id") values ('f31dce9e-36f8-4184-b692-dfad03c83816', 93.3, 'Merline', 'ad103f84-4276-4bf1-b27d-a7e3e6a1ea62');
+insert into "subject" ("id", "credits", "name", "book_id") values ('5144a134-4d66-4081-951b-fa00f498e490', 83.9, 'Adele', '867e8e15-1222-4ff2-913b-5423edff9b0d');
+insert into "subject" ("id", "credits", "name", "book_id") values ('c80d4996-2bb4-48c5-b88d-b933108ffa02', 30.3, 'Hewe', '20f88e02-d0a5-4d13-83b4-17a92f8d4756');
+insert into "subject" ("id", "credits", "name", "book_id") values ('80e4c4ff-347c-4714-aecd-61a2b8ae5945', 14.9, 'Wilbur', 'e365fe79-70dc-4bb3-8646-1ccd007440a7');
+insert into "subject" ("id", "credits", "name", "book_id") values ('a364ba9c-9078-4679-b098-bd151bb86afa', 55.2, 'Sanders', 'ba10cf38-757b-48c4-a506-14320b5273d3');
+insert into "subject" ("id", "credits", "name", "book_id") values ('53f03d14-b63c-49c6-a626-754650f03667', 61.8, 'Rea', '31498a0c-08f8-4345-a237-a25d2aaf3e7e');
+insert into "subject" ("id", "credits", "name", "book_id") values ('fac2890e-87b4-4e5b-8324-e7bca27465af', 5.2, 'Iseabal', '8e3a5e26-9125-4447-84a0-143c29cec712');
+insert into "subject" ("id", "credits", "name", "book_id") values ('2dfab516-dc73-490a-9cc0-fad8ca08f367', 51.3, 'Goran', '25a7ab98-9994-421a-8e82-558ef5f1deda');
+insert into "subject" ("id", "credits", "name", "book_id") values ('284adc94-1c89-40d2-8af6-f3c1aae13efd', 61.0, 'Ralph', '96a0072c-6e05-4dbf-ade1-789042042637');
+insert into "subject" ("id", "credits", "name", "book_id") values ('815155d5-c901-4a25-ba8d-e2c30b7c8441', 35.8, 'Abey', '228c446a-01ca-4462-bcc5-0f41d9fa7aa9');
+insert into "subject" ("id", "credits", "name", "book_id") values ('63ec8791-e2b3-43b3-bca3-e43193a8d052', 41.5, 'Gal', 'fd5596ef-d765-4c96-8348-f2a2b589513a');
+insert into "subject" ("id", "credits", "name", "book_id") values ('a6388b00-af6f-483c-b891-cd6181adad3b', 89.4, 'Geno', '918b30f9-9562-4191-b004-80950cd3ba61');
+insert into "subject" ("id", "credits", "name", "book_id") values ('57eea28e-47e2-4113-8193-a3e9f60d16f7', 2.0, 'Cecily', 'f3a82432-7e7f-4932-9b81-332d8c333749');
+insert into "subject" ("id", "credits", "name", "book_id") values ('c4e51a55-22cf-4930-82c8-4a2b3534cd2e', 17.1, 'Johannes', 'a73a6aed-8c10-4ffd-b35c-5095eb177901');
+insert into "subject" ("id", "credits", "name", "book_id") values ('0b6b0a20-4551-4200-bfec-eb4c713650ec', 40.0, 'Madelon', '7c5a9092-8701-4509-bdb4-456940058115');
+insert into "subject" ("id", "credits", "name", "book_id") values ('7c505172-571a-48b2-b9e9-062665c404d7', 36.2, 'Vivian', 'c6800f9e-3077-4355-b91c-c12333b9ebf6');
+insert into "subject" ("id", "credits", "name", "book_id") values ('3cfe6079-ab35-4604-9838-89e251d117ce', 23.6, 'Federica', '29ffbc5e-7275-40e3-b227-ec2fcf7bd072');
+insert into "subject" ("id", "credits", "name", "book_id") values ('26d03e5e-31e2-4734-b564-65c26c52f39b', 20.0, 'Lira', 'ba14c948-cc86-43d5-b319-c4339cd5db62');
 
 -- SUBJECT END
 
@@ -195,16 +195,16 @@ insert into "role" ("id", "type", "user_id", "school_id", "class_id", "subject_i
 insert into "role" ("id", "type", "user_id", "school_id", "class_id", "subject_id") values ('70d49cd3-db6e-4f89-9813-52bad54cb696', 'student', 'b0acbec0-4d97-4cc7-920b-8684341aabe8', '386852c4-2c2e-4097-ba86-4f24f03726c7', '96a42758-13b9-42fc-a307-f4e4a1b90a93', null);
 insert into "role" ("id", "type", "user_id", "school_id", "class_id", "subject_id") values ('04a26366-160a-4153-a517-d00fa55d194d', 'student', '469a373a-22b8-463e-be0e-bac081b1824b', '386852c4-2c2e-4097-ba86-4f24f03726c7', '96a42758-13b9-42fc-a307-f4e4a1b90a93', null);
 insert into "role" ("id", "type", "user_id", "school_id", "class_id", "subject_id") values ('3058b5dc-ba9d-4a50-b965-093425d356f0', 'student', 'eb987d6e-8eea-4cd5-a266-c0e47908a126', '386852c4-2c2e-4097-ba86-4f24f03726c7', '96a42758-13b9-42fc-a307-f4e4a1b90a93', null);
-insert into "role" ("id", "type", "user_id", "school_id", "class_id", "subject_id") values ('e3aaa3da-83e2-46b8-aa11-944e66d60929', 'student', '10bc048e-1fc8-482d-98c1-ebf90bb2f4c0', '9e557ce0-57f5-4418-84c7-30875b55d6bd', '147fb12c-2b6a-49f8-a02f-f9e740b8d7b6', null);
-insert into "role" ("id", "type", "user_id", "school_id", "class_id", "subject_id") values ('197161b1-47fe-4f1e-a477-029778e92450', 'student', '3b03354c-15a2-4c7a-974e-1807cb158363', '9e557ce0-57f5-4418-84c7-30875b55d6bd', '147fb12c-2b6a-49f8-a02f-f9e740b8d7b6', null);
-insert into "role" ("id", "type", "user_id", "school_id", "class_id", "subject_id") values ('0b39e35c-ca15-4fe6-ae65-ad918f54e905', 'student', 'e8aaba53-c145-499e-b826-7b60c6236d46', '9e557ce0-57f5-4418-84c7-30875b55d6bd', '147fb12c-2b6a-49f8-a02f-f9e740b8d7b6', null);
-insert into "role" ("id", "type", "user_id", "school_id", "class_id", "subject_id") values ('4b88b840-2c36-4ee8-981f-cf79d550ae5a', 'student', '8e1f8e82-fc49-4e28-996b-ff31718f2ba1', '9e557ce0-57f5-4418-84c7-30875b55d6bd', '147fb12c-2b6a-49f8-a02f-f9e740b8d7b6', null);
+insert into "role" ("id", "type", "user_id", "school_id", "class_id", "subject_id") values ('e3aaa3da-83e2-46b8-aa11-944e66d60929', 'student', '10bc048e-1fc8-482d-98c1-ebf90bb2f4c0', '9e557ce0-57f5-4418-84c7-30875b55d6bd', 'b643bfc9-a0f3-405b-ad67-3c9045d65f2a', null);
+insert into "role" ("id", "type", "user_id", "school_id", "class_id", "subject_id") values ('197161b1-47fe-4f1e-a477-029778e92450', 'student', '3b03354c-15a2-4c7a-974e-1807cb158363', '9e557ce0-57f5-4418-84c7-30875b55d6bd', 'b643bfc9-a0f3-405b-ad67-3c9045d65f2a', null);
+insert into "role" ("id", "type", "user_id", "school_id", "class_id", "subject_id") values ('0b39e35c-ca15-4fe6-ae65-ad918f54e905', 'student', 'e8aaba53-c145-499e-b826-7b60c6236d46', '9e557ce0-57f5-4418-84c7-30875b55d6bd', 'b643bfc9-a0f3-405b-ad67-3c9045d65f2a', null);
+insert into "role" ("id", "type", "user_id", "school_id", "class_id", "subject_id") values ('4b88b840-2c36-4ee8-981f-cf79d550ae5a', 'student', '8e1f8e82-fc49-4e28-996b-ff31718f2ba1', '9e557ce0-57f5-4418-84c7-30875b55d6bd', 'b643bfc9-a0f3-405b-ad67-3c9045d65f2a', null);
 insert into "role" ("id", "type", "user_id", "school_id", "class_id", "subject_id") values ('4de37463-1769-44e3-af16-27620f943cf0', 'teacher', 'bf251ba8-f20e-49c4-9770-972065512781', '386852c4-2c2e-4097-ba86-4f24f03726c7', '96a42758-13b9-42fc-a307-f4e4a1b90a93', 'fb257f25-03e4-4339-be7c-bd1df01a4a86');
 insert into "role" ("id", "type", "user_id", "school_id", "class_id", "subject_id") values ('cdde6fcb-6b99-4809-b634-cd20f324c2ee', 'teacher', '7277eff6-e51a-46e1-a038-3179340eafc8', '386852c4-2c2e-4097-ba86-4f24f03726c7', null, 'fb257f25-03e4-4339-be7c-bd1df01a4a86');
 insert into "role" ("id", "type", "user_id", "school_id", "class_id", "subject_id") values ('d8c15d4d-5c94-4b2c-ae54-7ae01bb7a6d2', 'teacher', '7e013e54-a2e0-4528-99c2-6d3a488f1dbd', '386852c4-2c2e-4097-ba86-4f24f03726c7', null, '6ca986ba-ba22-448b-8273-449091cdb5f0');
 insert into "role" ("id", "type", "user_id", "school_id", "class_id", "subject_id") values ('402e28d8-9723-4507-9ac6-847830d13b8b', 'teacher', '281921cf-bbdd-4130-b009-4364ba8b01cd', '386852c4-2c2e-4097-ba86-4f24f03726c7', null, 'f31dce9e-36f8-4184-b692-dfad03c83816');
 insert into "role" ("id", "type", "user_id", "school_id", "class_id", "subject_id") values ('20a9e921-45b1-4d2e-b4a9-3e6035eb9b2d', 'teacher', '60610b8b-0940-45b3-a788-4cf8a4a4db98', '386852c4-2c2e-4097-ba86-4f24f03726c7', null, '5144a134-4d66-4081-951b-fa00f498e490');
-insert into "role" ("id", "type", "user_id", "school_id", "class_id", "subject_id") values ('2d4d4cc6-f6ed-48c6-aa4b-8085dbe86079', 'teacher', '11a181f3-b50b-4b88-8575-bbcdc3994c9a', '9e557ce0-57f5-4418-84c7-30875b55d6bd', '147fb12c-2b6a-49f8-a02f-f9e740b8d7b6', 'fac2890e-87b4-4e5b-8324-e7bca27465af');
+insert into "role" ("id", "type", "user_id", "school_id", "class_id", "subject_id") values ('2d4d4cc6-f6ed-48c6-aa4b-8085dbe86079', 'teacher', '11a181f3-b50b-4b88-8575-bbcdc3994c9a', '9e557ce0-57f5-4418-84c7-30875b55d6bd', 'b643bfc9-a0f3-405b-ad67-3c9045d65f2a', 'fac2890e-87b4-4e5b-8324-e7bca27465af');
 insert into "role" ("id", "type", "user_id", "school_id", "class_id", "subject_id") values ('42b99918-2718-4270-ac84-4c773c9d20ab', 'teacher', '6cd7205c-04dc-4901-88c0-6428400e067e', '9e557ce0-57f5-4418-84c7-30875b55d6bd', null, 'fac2890e-87b4-4e5b-8324-e7bca27465af');
 insert into "role" ("id", "type", "user_id", "school_id", "class_id", "subject_id") values ('8161d53c-9839-4014-b221-d33971d623ee', 'teacher', '153469cd-2364-47d0-8e17-f0881173db53', '9e557ce0-57f5-4418-84c7-30875b55d6bd', null, '2dfab516-dc73-490a-9cc0-fad8ca08f367');
 insert into "role" ("id", "type", "user_id", "school_id", "class_id", "subject_id") values ('d7bae4d4-fd2a-4e10-8db1-b671c0940361', 'teacher', 'f11ea9d6-1ffe-4ac8-915d-824bb12121c1', '9e557ce0-57f5-4418-84c7-30875b55d6bd', null, '284adc94-1c89-40d2-8af6-f3c1aae13efd');
@@ -219,10 +219,10 @@ insert into "event" ("id", "class_id", "role_id", "classroom_id", "subject_id") 
 insert into "event" ("id", "class_id", "role_id", "classroom_id", "subject_id") values ('f35cf563-98a6-4ca3-874c-06d36eee7289', '96a42758-13b9-42fc-a307-f4e4a1b90a93', 'd8c15d4d-5c94-4b2c-ae54-7ae01bb7a6d2', '90961900-f9ba-46f5-b42f-57a27ae2bd28', '53f03d14-b63c-49c6-a626-754650f03667');
 insert into "event" ("id", "class_id", "role_id", "classroom_id", "subject_id") values ('c40e09e2-17f7-4434-af23-0e231c28da1a', '96a42758-13b9-42fc-a307-f4e4a1b90a93', '402e28d8-9723-4507-9ac6-847830d13b8b', '408096c0-a630-495b-bdf0-5d0a35e0767e', 'fac2890e-87b4-4e5b-8324-e7bca27465af');
 insert into "event" ("id", "class_id", "role_id", "classroom_id", "subject_id") values ('9580a14b-513f-47de-ad42-0f64dd78cdf4', '96a42758-13b9-42fc-a307-f4e4a1b90a93', '2d4d4cc6-f6ed-48c6-aa4b-8085dbe86079', '90961900-f9ba-46f5-b42f-57a27ae2bd28', '2dfab516-dc73-490a-9cc0-fad8ca08f367');
-insert into "event" ("id", "class_id", "role_id", "classroom_id", "subject_id") values ('ed717557-dadd-4013-b79c-4ad9040afbbd', 'b643bfc9-a0f3-405b-ad67-3c9045d65f2a', '6cd7205c-04dc-4901-88c0-6428400e067e', null, '6ca986ba-ba22-448b-8273-449091cdb5f0', 'c4e51a55-22cf-4930-82c8-4a2b3534cd2e');
-insert into "event" ("id", "class_id", "role_id", "classroom_id", "subject_id") values ('12264a87-ff7b-467b-bd78-02bfea651bf1', 'b643bfc9-a0f3-405b-ad67-3c9045d65f2a', '11a181f3-b50b-4b88-8575-bbcdc3994c9a', '147fb12c-2b6a-49f8-a02f-f9e740b8d7b6', '0b6b0a20-4551-4200-bfec-eb4c713650ec');
-insert into "event" ("id", "class_id", "role_id", "classroom_id", "subject_id") values ('78ceaaa9-f9c9-421c-98da-897268879f32', 'b643bfc9-a0f3-405b-ad67-3c9045d65f2a', '6cd7205c-04dc-4901-88c0-6428400e067e', 'cdeb8c99-7a79-433b-9475-3339652f7850', '7c505172-571a-48b2-b9e9-062665c404d7');
-insert into "event" ("id", "class_id", "role_id", "classroom_id", "subject_id") values ('a6951c9c-76bd-406c-bcde-840ce4b356ed', 'b643bfc9-a0f3-405b-ad67-3c9045d65f2a', '153469cd-2364-47d0-8e17-f0881173db53', '147fb12c-2b6a-49f8-a02f-f9e740b8d7b6', '3cfe6079-ab35-4604-9838-89e251d117ce');
-insert into "event" ("id", "class_id", "role_id", "classroom_id", "subject_id") values ('c3865328-2007-4016-9ef9-4d2b807a9958', 'b643bfc9-a0f3-405b-ad67-3c9045d65f2a', 'f11ea9d6-1ffe-4ac8-915d-824bb12121c1', null, '26d03e5e-31e2-4734-b564-65c26c52f39b');
-insert into "event" ("id", "class_id", "role_id", "classroom_id", "subject_id") values ('bfee891c-a3b4-45a2-8486-65e3d585e0b2', 'b643bfc9-a0f3-405b-ad67-3c9045d65f2a', '11a181f3-b50b-4b88-8575-bbcdc3994c9a', null, '26d03e5e-31e2-4734-b564-65c26c52f39b');
+insert into "event" ("id", "class_id", "role_id", "classroom_id", "subject_id") values ('ed717557-dadd-4013-b79c-4ad9040afbbd', 'b643bfc9-a0f3-405b-ad67-3c9045d65f2a', '2d4d4cc6-f6ed-48c6-aa4b-8085dbe86079', null, '6ca986ba-ba22-448b-8273-449091cdb5f0');
+insert into "event" ("id", "class_id", "role_id", "classroom_id", "subject_id") values ('12264a87-ff7b-467b-bd78-02bfea651bf1', 'b643bfc9-a0f3-405b-ad67-3c9045d65f2a', '2d4d4cc6-f6ed-48c6-aa4b-8085dbe86079', '147fb12c-2b6a-49f8-a02f-f9e740b8d7b6', '0b6b0a20-4551-4200-bfec-eb4c713650ec');
+insert into "event" ("id", "class_id", "role_id", "classroom_id", "subject_id") values ('78ceaaa9-f9c9-421c-98da-897268879f32', 'b643bfc9-a0f3-405b-ad67-3c9045d65f2a', '42b99918-2718-4270-ac84-4c773c9d20ab', 'cdeb8c99-7a79-433b-9475-3339652f7850', '7c505172-571a-48b2-b9e9-062665c404d7');
+insert into "event" ("id", "class_id", "role_id", "classroom_id", "subject_id") values ('a6951c9c-76bd-406c-bcde-840ce4b356ed', 'b643bfc9-a0f3-405b-ad67-3c9045d65f2a', '8161d53c-9839-4014-b221-d33971d623ee', '147fb12c-2b6a-49f8-a02f-f9e740b8d7b6', '3cfe6079-ab35-4604-9838-89e251d117ce');
+insert into "event" ("id", "class_id", "role_id", "classroom_id", "subject_id") values ('c3865328-2007-4016-9ef9-4d2b807a9958', 'b643bfc9-a0f3-405b-ad67-3c9045d65f2a', 'd7bae4d4-fd2a-4e10-8db1-b671c0940361', null, '26d03e5e-31e2-4734-b564-65c26c52f39b');
+insert into "event" ("id", "class_id", "role_id", "classroom_id", "subject_id") values ('bfee891c-a3b4-45a2-8486-65e3d585e0b2', 'b643bfc9-a0f3-405b-ad67-3c9045d65f2a', '2d4d4cc6-f6ed-48c6-aa4b-8085dbe86079', null, '26d03e5e-31e2-4734-b564-65c26c52f39b');
 -- EVENT END
