@@ -9,3 +9,4 @@ services:
       - db.env
     volumes:
         - ./db-data:/var/lib/postgresql/data
+        - ./dumps:/dumps
