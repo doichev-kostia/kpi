@@ -102,4 +102,68 @@ where class_id in (
     where "class".school_id = '386852c4-2c2e-4097-ba86-4f24f03726c7'
     );
 
+-- c
+-- doesn't really make sense, but it's required by the task
+select concat("a"."first_name", ' ', "a"."last_name") as "Author",
+       "b"."name" as "Book"
+from "author" "a"
+cross join "book" "b"
+order by "Author"
 
+-- d
+select concat("user"."first_name", ' ', "user"."last_name") as "Full name",
+       "role"."type" as "Role"
+from "user"
+join "role" on "role"."user_id" = "user"."id"
+order by "Full name"
+limit 10
+
+-- e
+select concat("user"."first_name", ' ', "user"."last_name") as "Teachers",
+       "role"."type" as "Role"
+from "user"
+join "role" on "role"."user_id" = "user"."id"
+where "role".type = 'teacher'
+order by "Teachers"
+limit 10
+
+-- f
+-- get a user and its teacher
+
+select concat("roles".first_name, ' ', roles.last_name) as "Role", concat(r.first_name, ' ', r.last_name) as "Teacher"
+-- create a virtual table with role id, name, and supervisor (teacher) id
+from (
+    select "role".id, "user".first_name, "user".last_name, "teacher".id as "class_teacher_id"
+    from "role"
+    inner join "user" on "user".id = "role".user_id
+    left join "role" as "teacher"
+                         on ("teacher"."class_id" = "role"."class_id" and "teacher"."type" = 'teacher')
+) as "roles"
+
+inner join (
+    select "role".id, "user".first_name, "user".last_name, "teacher".id as "class_teacher_id"
+    from "role"
+    inner join "user" on "user".id = "role".user_id
+    left join "role" as "teacher"
+        on ("teacher"."class_id" = "role"."class_id" and "teacher"."type" = 'teacher')
+) as "r"
+
+on "roles".class_teacher_id = "r".id
+
+
+-- g
+select "role".id, coalesce("class".name, 'No Class') as "Class"
+from "role"
+left join "class" on "role"."class_id" = "class".id;
+
+-- h
+select "role".id as "role", "class".name
+from "role"
+right join "class" on "role"."class_id" = "class".id;
+
+-- i
+select "u".first_name, "u".last_name
+from "user" "u"
+union
+select "a".first_name, "a".last_name
+from "author" "a";
