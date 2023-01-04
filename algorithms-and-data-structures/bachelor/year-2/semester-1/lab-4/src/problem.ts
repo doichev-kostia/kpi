@@ -37,10 +37,20 @@ export class Problem {
     }
 
     private generateMatrix(): void {
-        this.matrix = [];
+        this.matrix = new Array<number[]>(NUMBER_OF_CITIES);
         for (let i = 0; i < NUMBER_OF_CITIES; i++) {
-            this.matrix[i] = [];
+            this.matrix[i] = new Array<number>(NUMBER_OF_CITIES);
             for (let j = 0; j < NUMBER_OF_CITIES; j++) {
+                /**
+                 * The cost of going between cities
+                 *
+                 * |  | 1 | 2 | 3
+                 * |1 | ∞ | x | x
+                 * |2 | x | ∞ | x
+                 * |3 | x | x | ∞
+                 *
+                 * x = random number between MIN_DISTANCE and MAX_DISTANCE
+                 */
                 this.matrix[i][j] = i == j ? Number.MAX_VALUE : getRandomInt(MIN_DISTANCE, MAX_DISTANCE);
             }
         }
@@ -48,8 +58,8 @@ export class Problem {
 
     private findOptimalSolution(): number {
         const solutions: number[] = [];
+        const nodes = Array.from({length: NUMBER_OF_CITIES}, (_, i) => i);
         for (let j = 0; j < NUMBER_OF_CITIES; j++) {
-            const nodes = Array.from({length: NUMBER_OF_CITIES}, (_, i) => i);
             let currentNode = j;
             const path: number[] = [];
             path.push(currentNode);

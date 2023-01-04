@@ -1,6 +1,13 @@
 import {Problem} from "./problem";
-import {getRandomInt} from "./utils";
-import {CONSTANT_ARGUMENTS, NUMBER_OF_ANTS, NUMBER_OF_CITIES} from "./constants";
+import {getAntSight, getRandomFloat, getRandomInt} from "./utils";
+import {
+    CONSTANT_ARGUMENTS,
+    MAX_PHEROMONE,
+    MIN_PHEROMONE,
+    NUMBER_OF_ANTS,
+    NUMBER_OF_CITIES,
+    PHEROMONE_DISAPPEARANCE_COEFFICIENT
+} from "./constants";
 
 export class AntAlgorithm {
     private problem: Problem;
@@ -9,14 +16,15 @@ export class AntAlgorithm {
     constructor(problem: Problem) {
         this.problem = problem;
         this.pheromoneMatrix = new Array<number[]>(NUMBER_OF_CITIES);
-        this.initializeMatrix();
+        this.initializePheromoneMatrix();
     }
 
     public iterate() {
+        // each ant finds a path
         const paths: number[][] = []
         for (let i = 0; i < NUMBER_OF_ANTS; i++) {
-            const initial = getRandomInt(0, NUMBER_OF_CITIES);
-            const path = this.findPath(initial);
+            const initialCity = getRandomInt(0, NUMBER_OF_CITIES);
+            const path = this.findPath(initialCity);
             paths.push(path);
         }
 
@@ -50,54 +58,84 @@ export class AntAlgorithm {
     }
 
     private getProbabilities(currentNode: number, allowedNodes: number[]) {
-        const values = new Array<number>(allowedNodes.length);
+        const probabilities = new Array<number>(allowedNodes.length);
         let sum = 0.0;
         for (let i = 0; i < allowedNodes.length; i++) {
-            values[i] = Math.pow(this.pheromoneMatrix[currentNode][allowedNodes[i]], CONSTANT_ARGUMENTS.alpha) *
-                Math.pow(1.0 / this.problem.matrix[currentNode][allowedNodes[i]], CONSTANT_ARGUMENTS.beta);
-            sum += values[i];
+            const destinationNode = allowedNodes[i];
+            const pheromone = this.pheromoneMatrix[currentNode][destinationNode];
+            const antSight = getAntSight(this.problem.matrix[currentNode][destinationNode]);
+            /* based on the formula: Pij = (tij)^alpha * (nij)^beta / sum((tij)^alpha * (nij)^beta)
+             * where:
+             * pj - probability of choosing the edge (i, j)
+             * tij - pheromone
+             * nij - ant sight
+             * alpha, beta - constant argument
+             */
+            probabilities[i] = Math.pow(pheromone, CONSTANT_ARGUMENTS.alpha) *
+                Math.pow(antSight, CONSTANT_ARGUMENTS.beta);
+            sum += probabilities[i];
         }
 
-        for (let i = 0; i < values.length; i++) {
-            values[i] /= sum;
+        for (let i = 0; i < probabilities.length; i++) {
+            probabilities[i] /= sum;
         }
 
-        return values;
+        return probabilities;
     }
 
     private updatePheromones(paths: number[][]) {
         for (let i = 0; i < NUMBER_OF_CITIES; i++) {
             for (let j = 0; j < NUMBER_OF_CITIES; j++) {
-                this.pheromoneMatrix[i][j] *= CONSTANT_ARGUMENTS.p;
+                this.pheromoneMatrix[i][j] *= PHEROMONE_DISAPPEARANCE_COEFFICIENT;
             }
         }
 
         paths.forEach(path => {
             const cost = this.problem.getCost(path);
             for (let i = 0; i < NUMBER_OF_CITIES; i++) {
+                /**
+                 * based on the formula: Lmin/Lk
+                 * where:
+                 * Lmin - the length of the shortest path
+                 * Lk - the length of the path for k-th ant
+                 */
                 this.pheromoneMatrix[path[i]][path[i + 1]] += this.problem.optimalSolution / cost;
             }
         })
     }
 
-    private findPath(initial: number) {
+    private findPath(initialCity: number) {
+        /**
+         * The sequence of cities that the ant has visited.
+         */
         const result: number[] = new Array<number>(NUMBER_OF_CITIES + 1);
-        const toVisit = Array.from(Array(NUMBER_OF_CITIES).keys()).filter(n => n !== initial);
-        result[0] = initial;
-        for (let i = 1; i < NUMBER_OF_CITIES; i++) {
-            const probabilities = this.getProbabilities(result[i - 1], toVisit);
-            const nodeIndex = this.chooseNode(probabilities);
-            result.push(toVisit[nodeIndex]);
-            toVisit.splice(nodeIndex, 1);
-        }
+        const citiesToVisit = Array.from(Array(NUMBER_OF_CITIES).keys()).filter(n => n !== initialCity);
+        result[0] = initialCity;
 
-        result.push(initial);
+
+        for (let i = 1; i < NUMBER_OF_CITIES; i++) {
+            const probabilities = this.getProbabilities(result[i - 1], citiesToVisit);
+            const nodeIndex = this.chooseNode(probabilities);
+            result[i] = citiesToVisit[nodeIndex];
+            citiesToVisit.splice(nodeIndex, 1);
+        }
+        const lastIndex = result.length - 1;
+        result[lastIndex] = initialCity;
         return result;
     }
 
+    /**
+     * Chooses a node based on the probabilities.
+     * The higher the probability, the higher the chance of being chosen.
+     *
+     * @returns index of the chosen node
+     */
     private chooseNode(probabilities: number[]) {
+        if (probabilities.length === 0) {
+            throw new Error('No probabilities');
+        }
         const random = Math.random();
-        let sum = 0.0;
+        let sum = 0;
         for (let i = 0; i < probabilities.length; i++) {
             sum += probabilities[i];
             if (sum > random) {
@@ -108,20 +146,12 @@ export class AntAlgorithm {
         return probabilities.length - 1;
     }
 
-    private initializeMatrix() {
+    private initializePheromoneMatrix() {
         this.pheromoneMatrix = new Array<number[]>(NUMBER_OF_CITIES);
         for (let i = 0; i < NUMBER_OF_CITIES; i++) {
             this.pheromoneMatrix[i] = new Array<number>(NUMBER_OF_CITIES);
             for (let j = 0; j < NUMBER_OF_CITIES; j++) {
-                /**
-                 * |  |1     |2    | 3
-                 * |1 |0     |0.1*d| 0.1*d
-                 * |2 |0.1*d |0    | 0.1*d
-                 * |3 |0.1*d |0.1*d| 0
-                 *
-                 * where d is the distance between cities
-                 */
-                this.pheromoneMatrix[i][j] = i === j ? 0 : 0.1;// to get distance between cities
+                this.pheromoneMatrix[i][j] = i === j ? 0 : getRandomFloat(MIN_PHEROMONE, MAX_PHEROMONE);
             }
         }
     }
