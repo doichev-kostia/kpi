@@ -1,13 +1,12 @@
-export const NUMBER_OF_CITIES = 5;
-export const NUMBER_OF_ANTS = 1;
+export const NUMBER_OF_CITIES = 200;
+export const NUMBER_OF_ANTS = 45;
 export const MIN_DISTANCE = 0;
-export const MAX_DISTANCE = 20
-export const MIN_PHEROMONE = 0.1;
-export const MAX_PHEROMONE = 0.3;
+export const MAX_DISTANCE = 50
+export const INITIAL_PHEROMONE = 0.1;
 export const CONSTANT_ARGUMENTS = {
     alpha: 3,
     beta: 2,
-    p: 0.2,
+    p: 0.3,
 };
 
 export const RESULTS_CHECKPOINT = 20;

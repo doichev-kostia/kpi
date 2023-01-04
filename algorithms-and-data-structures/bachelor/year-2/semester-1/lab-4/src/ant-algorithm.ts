@@ -1,9 +1,8 @@
 import {Problem} from "./problem";
-import {getAntSight, getRandomFloat, getRandomInt} from "./utils";
+import {getAntSight, getRandomInt} from "./utils";
 import {
     CONSTANT_ARGUMENTS,
-    MAX_PHEROMONE,
-    MIN_PHEROMONE,
+    INITIAL_PHEROMONE,
     NUMBER_OF_ANTS,
     NUMBER_OF_CITIES,
     PHEROMONE_DISAPPEARANCE_COEFFICIENT
@@ -23,7 +22,7 @@ export class AntAlgorithm {
         // each ant finds a path
         const paths: number[][] = []
         for (let i = 0; i < NUMBER_OF_ANTS; i++) {
-            const initialCity = getRandomInt(0, NUMBER_OF_CITIES);
+            const initialCity = getRandomInt(0, NUMBER_OF_CITIES - 1);
             const path = this.findPath(initialCity);
             paths.push(path);
         }
@@ -58,6 +57,7 @@ export class AntAlgorithm {
     }
 
     private getProbabilities(currentNode: number, allowedNodes: number[]) {
+
         const probabilities = new Array<number>(allowedNodes.length);
         let sum = 0.0;
         for (let i = 0; i < allowedNodes.length; i++) {
@@ -151,7 +151,7 @@ export class AntAlgorithm {
         for (let i = 0; i < NUMBER_OF_CITIES; i++) {
             this.pheromoneMatrix[i] = new Array<number>(NUMBER_OF_CITIES);
             for (let j = 0; j < NUMBER_OF_CITIES; j++) {
-                this.pheromoneMatrix[i][j] = i === j ? 0 : getRandomFloat(MIN_PHEROMONE, MAX_PHEROMONE);
+                this.pheromoneMatrix[i][j] = i === j ? 0 : INITIAL_PHEROMONE
             }
         }
     }

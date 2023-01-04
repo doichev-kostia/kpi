@@ -7,7 +7,7 @@ const main = () => {
     const problem = new Problem();
     const algorithm = new AntAlgorithm(problem);
 
-    let csv = "";
+    let csv = "iteration, solution\n";
     const iterations = NUMBER_OF_ITERATIONS / RESULTS_CHECKPOINT;
     for (let i = 0; i < iterations; i++) {
         for (let j = 0; j < RESULTS_CHECKPOINT; j++) {
