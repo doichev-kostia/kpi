@@ -1,7 +1,7 @@
 version: '3.2'
 services:
   postgres:
-    container_name: lab-2-db
+    container_name: db-course
     image: postgres:15
     ports:
       - '5432:5432'
