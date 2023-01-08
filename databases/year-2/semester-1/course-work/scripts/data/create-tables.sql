@@ -100,7 +100,7 @@ create table if not exists "customer" (
 
 create table if not exists "order" (
     "id" uuid primary key default gen_random_uuid(),
-    "customer_id" uuid
+    "customer_id" uuid on delete set null
 );
 
 alter table "order" add constraint "fk_order_customer" foreign key ("customer_id") references "customer" ("id");
