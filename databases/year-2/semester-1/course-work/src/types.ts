@@ -76,8 +76,7 @@ export type Product = {
 
 export type Order = {
     id: string;
-    customerId: string;
-    price: number;
+    customerId?: string;
 }
 
 export type OrderItem = {

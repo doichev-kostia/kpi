@@ -196,7 +196,7 @@ for (let i = 0; i < numberOfOrders; i++) {
 
     const customer = isAnonymous ? undefined : customers[getRandomInt(0, customers.length - 1)];
 
-    const order: Partial<Order> = {
+    const order: Order = {
         id: randomUUID(),
         customerId: customer ? customer.id : undefined,
     };
@@ -226,16 +226,8 @@ for (let i = 0; i < numberOfOrders; i++) {
             quantity: getRandomInt(1, 5),
         });
     }
-    order.price = currentOrderItems.reduce((acc, item) => {
-        if (item.ticketId) {
-            const ticket = tickets.find(ticket => ticket.id === item.ticketId);
-            return acc + (ticket?.price || 0);
-        } else {
-            const product = products.find(product => product.id === item.productId);
-            return acc + (product?.price || 0);
-        }
-    }, 0);
-    orders.push(order as Order);
+
+    orders.push(order);
     orderItems.push(...currentOrderItems);
 }
 
@@ -262,7 +254,7 @@ const productSql = `INSERT INTO "product" ("id", "name", "price") VALUES ${produ
 const eventSql = `INSERT INTO "event" ("id", "movie_id", "room_id", "starts_at", "ends_at") VALUES ${events.map(event => `('${event.id}', '${event.movieId}', '${event.roomId}', ${toTimestamp(event.startsAt)}, ${toTimestamp(event.endsAt)})`).join(", ")};`;
 const ticketSql = `INSERT INTO "ticket" ("id", "event_id", "seat_id", "price") VALUES ${tickets.map(ticket => `('${ticket.id}', '${ticket.eventId}', '${ticket.seatId}', ${ticket.price})`).join(", ")};`;
 const customerSql = `INSERT INTO "customer" ("id", "first_name", "last_name", "phone_number", "email", "password") VALUES ${customers.map(customer => `('${customer.id}', '${formatQuotes(customer.firstName)}', '${formatQuotes(customer.lastName)}', '${customer.phoneNumber}', '${customer.email}', '${customer.password}')`).join(", ")};`;
-const orderSql = `INSERT INTO "order" ("id", "customer_id", "price") VALUES ${orders.map(order => `('${order.id}', ${order.customerId ? `'${order.customerId}'` : "NULL"}, ${order.price})`).join(", ")};`;
+const orderSql = `INSERT INTO "order" ("id", "customer_id") VALUES ${orders.map(order => `('${order.id}', ${order.customerId ? `'${order.customerId}'` : "NULL"})`).join(", ")};`;
 const orderItemSql = `INSERT INTO "order_item" ("id", "order_id", "ticket_id", "product_id", "quantity") VALUES ${orderItems.map(orderItem => `('${orderItem.id}', '${orderItem.orderId}', ${orderItem.ticketId ? `'${orderItem.ticketId}'` : "NULL"}, ${orderItem.productId ? `'${orderItem.productId}'` : "NULL"}, ${orderItem.quantity})`).join(", ")};`;
 
 const sql = `-- Automatically generated data
