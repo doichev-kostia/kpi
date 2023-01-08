@@ -13,7 +13,7 @@ create table if not exists "cinema" (
     "id" uuid primary key default gen_random_uuid(),
     "name" varchar(120) not null,
     "address_id" uuid not null,
-    "phone_number" varchar(20) not null,
+    "phone_number" varchar(30) not null,
     "email" varchar(120) not null
 );
 
@@ -92,7 +92,7 @@ create table if not exists "customer" (
     "id" uuid primary key default gen_random_uuid(),
     "first_name" varchar(80) not null,
     "last_name" varchar(80) not null,
-    "phone_number" varchar(20) not null,
+    "phone_number" varchar(30) not null,
     "email" varchar(120) not null,
     "password" varchar(120) not null,
     constraint "user_email" unique ("email")
