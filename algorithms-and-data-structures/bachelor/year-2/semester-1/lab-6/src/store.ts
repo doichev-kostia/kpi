@@ -1,6 +1,6 @@
 import {create} from "zustand";
 import {z} from "zod";
-import {CardValue, createDeck, DeckCard, FaceCard} from "./deck";
+import {CardValue, createDeck, DeckCard, FaceCard, shuffle} from "./deck";
 import produce from "immer";
 
 export const faceCardScore: Readonly<Record<FaceCard, number>> = {
@@ -36,7 +36,7 @@ type GameState = {
 
 
 const getDefaultValues = () => {
-	const deck = createDeck();
+	const deck = shuffle(createDeck());
 	return {
 		bank: 0,
 		playerHand: [],
@@ -95,11 +95,21 @@ export const useGameStore = create<GameState>((set, get,) => ({
 		},
 		getLastDeckCard: () => {
 			const deck = get().deck;
-			return deck[deck.length - 1];
+			const card = deck[deck.length - 1];
+			if (!card) {
+				throw new Error('Deck is empty');
+			}
+			get().actions.removeFromDeck(card);
+			return card;
 		},
 		getFirstDeckCard: () => {
 			const deck = get().deck;
-			return deck[0];
+			const card =  deck[0];
+			if (!card) {
+				throw new Error('Deck is empty');
+			}
+			get().actions.removeFromDeck(card);
+			return card;
 		}
 	}
 }))

@@ -8,27 +8,26 @@ import {shallow} from "zustand/shallow";
 
 function App() {
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
-	const {bank, playerHand, computerHand, deck, actions} = useGameStore(({
-																			  bank,
-																			  playerHand,
-																			  computerHand,
-																			  deck,
-																			  actions
-																		  }) => ({
-		bank,
-		playerHand,
-		computerHand,
-		deck,
-		actions
-	}), shallow)
+	const {bank, playerHand, computerHand, deck, actions} = useGameStore(
+		({
+			 bank,
+			 playerHand,
+			 computerHand,
+			 deck,
+			 actions
+		 }) => ({
+			bank,
+			playerHand,
+			computerHand,
+			deck,
+			actions
+		}), shallow)
 
 	const playerScore = actions.getScore('player');
 
 	if (playerScore >= 21 && !isDialogOpen) {
 		setIsDialogOpen(true);
 	}
-
-	console.log({isDialogOpen})
 
 
 	return (
@@ -44,9 +43,10 @@ function App() {
 			<main>
 				<section>
 					<button onClick={() => {
-					actions.addCardToHand('player', actions.getLastDeckCard());
+						actions.addCardToHand('player', actions.getLastDeckCard());
 					}
-					}>get card</button>
+					}>get card
+					</button>
 				</section>
 				<section className="flex justify-center">
 					<div className="max-w-md">
