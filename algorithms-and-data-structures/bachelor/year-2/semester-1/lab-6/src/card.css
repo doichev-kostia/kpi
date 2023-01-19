@@ -45,7 +45,6 @@
 
 [data-suit="heart"] .card__pip {
 	background-image: url("assets/heart.svg");
-
 }
 
 [data-suit="diamond"] .card__pip {
@@ -54,6 +53,10 @@
 
 [data-suit="club"] .card__pip {
 	background-image: url("assets/club.svg");
+}
+
+[data-suit="spade"] .card__pip {
+	background-image: url("assets/spade.svg");
 }
 
 .card__corner-number {
