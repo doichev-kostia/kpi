@@ -36,17 +36,17 @@ function App() {
 	const computerScore = actions.getScore('computer');
 	const dealerScore = actions.getScore('dealer');
 
-	if (playerScore === 21) {
-		toast.success('Blackjack! You win!');
-		actions.removeActor(sequence.indexOf('player'));
-	}
-
-	if (computerScore === 21) {
-		toast.success('Blackjack! Computer wins!');
-		actions.removeActor(sequence.indexOf('computer'));
-	}
-
 	useEffect(() => {
+		if (playerScore === 21) {
+			toast.success('Blackjack! You win!');
+			actions.removeActor(sequence.indexOf('player'));
+		}
+
+		if (computerScore === 21) {
+			toast.success('Blackjack! Computer wins!');
+			actions.removeActor(sequence.indexOf('computer'));
+		}
+
 		if (activeActor === 'dealer') {
 			if (dealerScore < MIN_DEALER_SCORE) {
 				actions.addCardToHand('dealer', actions.getLastDeckCard());
@@ -72,8 +72,27 @@ function App() {
 			setTimeout(() => {
 				actions.launchNewRound();
 			}, 4000)
+		} else if (activeActor === 'computer' && computerScore) {
+			const shouldHit = Math.random() > 0.5;
+			setTimeout(() => {
+				if (computerScore < 17 && shouldHit) {
+					actions.addCardToHand('computer', actions.getLastDeckCard());
+					toast.info('Computer hits!');
+				} else {
+					toast.info('Computer stands!');
+				}
+
+				const updatedComputerScore = actions.getScore('computer');
+
+				if (updatedComputerScore > 21) {
+					toast.success('Computer busts!');
+					actions.removeActor(sequence.indexOf('computer'));
+				}
+
+				actions.nextActor();
+			}, 3000)
 		}
-	}, [activeActorIndex])
+	}, [activeActorIndex, computerScore])
 
 	const handlePlayerHit = () => {
 		actions.addCardToHand('player', actions.getLastDeckCard());
@@ -129,7 +148,7 @@ function App() {
 							})}
 						</ul>
 						<p className='text-sm'>
-							Score is: { isDealerTurn ? dealerScore : '?' }
+							Score is: {isDealerTurn ? dealerScore : '?'}
 						</p>
 					</div>
 				</section>
@@ -151,16 +170,6 @@ function App() {
 							<p className='text-sm'>
 								Score is: {computerScore}
 							</p>
-						</div>
-						<div className="flex justify-between gap-5">
-							<Button variant="contained"
-									onClick={() => {
-										actions.addCardToHand('computer', actions.getLastDeckCard());
-										actions.nextActor();
-									}}>Hit</Button>
-							<Button variant="contained" onClick={() => {
-								actions.nextActor()
-							}}>Stand</Button>
 						</div>
 					</div>
 					<div>
