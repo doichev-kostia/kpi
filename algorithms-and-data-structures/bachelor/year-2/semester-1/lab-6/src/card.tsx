@@ -8,15 +8,16 @@ interface CardProps {
 	value: CardValue;
 	suit: CardSuit;
 	faceUp?: boolean;
+	className?: string;
 }
 
-export const Card = ({value, suit, faceUp = false}: CardProps) => {
+export const Card = ({value, suit, faceUp = false, className}: CardProps) => {
 
 	const valueAsNumber = parseInt(value);
 	const isFaceCardValue = Number.isNaN(valueAsNumber);
 
 	return (
-		<div className={cx('card', !faceUp && 'bg-gray-500')} data-value={value} data-suit={suit}>
+		<div className={cx('card', !faceUp && 'bg-gray-500', className)} data-value={value} data-suit={suit}>
 			{faceUp && (
 				<>
 					{
