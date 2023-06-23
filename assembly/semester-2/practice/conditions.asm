@@ -23,24 +23,25 @@ if:
     cmp rax, rbx
     jne elseif
     add rdx, rbx
-    jmp exit
+    ret
 
 elseif:
     cmp rax, rcx
     jne else
     mov rdx, rcx
-    jmp exit
+    ret
 
 else:
     mov rdx, 1
-    jmp exit
+    ret
 
 _start:
     mov rax, 3
     mov rbx, 4
     mov rcx, 5
     mov rdx, 0
-    jmp if
+    call if ; I have to use call here, otherwise, the program will come back to the beginning if the _start and will get stuck in an infinite loop
+    jmp exit
 
 
 exit:
