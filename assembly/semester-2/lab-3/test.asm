@@ -19,44 +19,52 @@ _start:
     call execute
 
 
-execute:
-    mov al, [x]   ; Load the value of x into AL
+; if (x > 0) {
+; 8x^2 + 36/x
+; } else if (-5 <= x && x <= 0) {
+; (1+x) / (1-x)
+; } else {
+; 10x^2
+; }
 
-    ; Check if x > 1
-    cmp al, 1
-    jle less_than_or_equal_1
+execute:
+    movsx rax, byte [x]   ; Load the value of x into AL
+
+    ; Check if x > 0
+    cmp rax, 0
+    jg positive
 
     ; Check if x <= 20
-    cmp al, 20
-    jg greater_than_20
+    cmp rax, -5
+    jl negative
 
-    ; Code to execute if x > 1 && x <= 20
-    ; 54 + x^2  / ( 1 + x )
 
-    ; Compute x^2
-    movzx rax, al  ; Zero-extend AL to EAX
-    mul rax ; Square the value of x
-
-    mov rbx, rax
-
-    movzx rdx, byte [x]
+    ; if (-5 <= x && x <= 0)
+    ; (1 + x) / ( 1 - x )
 
     ; Compute (1 + x)
-    add rdx, 1
+    movsx rax, al  ; Zero-extend AL to EAX
+    ;persist x
+    mov rdx, rax
+    add rax, 1
 
-    ; Divide x^2 by (1 + x)
+    mov rbx, rax ; persist (1 + x)
+
+    ; Compute (1 - x)
+    mov rcx, 1
+    sub rcx, rdx
+
+    ; Compute (1 + x) / ( 1 - x )
+
     mov rax, rbx
-    mov rbx, rdx
-    xor rdx, rdx
+    mov rbx, rcx
+    xor rdx, rdx ; clear rdx
     div rbx
-
-    ; Add 54 to the result
-    add rax, 54
 
     mov [whole_number], rax
     call handle_decimal
 
-    jmp end
+    jmp exit
 
 handle_decimal:
     cmp rdx, 0
@@ -69,59 +77,53 @@ handle_fraction:
 
     ret
 
-less_than_or_equal_1:
-    ; Code to execute if x <= 1
-    ; 75x^2 - 17x
-
+positive:
+    ; Code to execute if x > 0
+    ; 8x^2 + 36/x
     ; Compute x^2
-    movzx rax, al  ; Zero-extend AL to EAX
+    movsx rax, al  ; Zero-extend AL to RAX
     mul rax ; Square the value of x
 
-    ; Compute 75x^2
-    mov rbx, 75
-    mul rbx ; Multiply 75 by x^2
+    ; Compute 8x^2
+    mov rbx, 8
+    mul rbx ; Multiply 8 by x^2
 
-    movzx rdx, byte [x]
+    movsx rbx, byte [x]
 
-    ; persist 75x^2
-    mov rbx, rax
-
-    ; Compute 17x
-    mov rax, 17
-    ; imul ebx, al TODO
-    mul rdx  ; Multiply 17 by x
-
-    ; Compute 75x^2 - 17x
-    sub rbx, rax
-
-    ; Handle the result (in EAX) as need
-    jmp end
-
-greater_than_20:
-    ; Code to execute if x > 20
-    ; 85x / ( 1 + x )
-    ; Load the value of x into AL
-    mov al, [x]
-    movzx rax, al  ; Zero-extend AL to EAX
-
-    ; Compute (1 + x)
+    ; persist 8x^2
     mov rcx, rax
-    add rcx, 1
 
-    ; Compute 85x
-    mov rbx, 85
-    mul rbx ; Multiply 85 by x
-
-    mov rbx, rcx
+    ; Compute 36/x
+    mov rax, 36
     xor rdx, rdx ; clear rdx
+    div rbx ; Divide 36 by x
 
-    ; Compute 85x / ( 1 + x )
-    div rbx ; Divide 85x by (1 + x)
+    ; Compute 8x^2 + 36/x
+    add rcx, rax
 
-    ; Handle the result (in EAX) as needed
+    mov [whole_number], rcx
+    call handle_decimal
 
-end:
-    ; Exit the program
-    mov eax, 1
-    xor ebx, ebx
-    int 0x80
+    ret
+
+negative:
+    ; Code to execute if x < -5
+    ; 10x^2
+    ; Compute x^2
+    movsx rax, al  ; Zero-extend AL to EAX
+    mul rax ; Square the value of x
+
+    ; Compute 10x^2
+    mov rbx, 10
+    mul rbx ; Multiply 10 by x^2
+
+    mov [whole_number], rax
+    call handle_decimal
+
+    ret
+
+exit:
+    mov rax, 60
+    mov rdi, 0
+    syscall
+

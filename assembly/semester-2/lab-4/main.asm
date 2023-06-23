@@ -1,33 +1,113 @@
 section .data
-    input_message db "Enter a number in range [127, 88]: ", 0
-    output_message db "The number is: ", 0
+    array_size_msg db "Choose an array size [2, 3]: ", 0
     invalid_input db "Invalid input!", 0
-    out_num db 0;   ; Buffer to store the string
-    digits db '00000000'    ; Buffer for temporary storage of digits
+    array_el_msg db "Enter array element [0, 5]: ", 0
+    array db 3 dup(0)
+    sum_msg db "Sum: ", 0
+    sum db 0
 
 section .bss
-    number_ascii resb 4
+    array_size resb 0
+    number_ascii resb 2
     number resb 1
     input_length resb 1
+    digitSpace resb 100
+    digitSpacePos resb 8
 
 section .text
 global _start
 
 _start:
-    mov rax, input_message
+    call _getArraySize
+    call _getArrayElements
+
+    lea rax, [_sum]
+    call _forEach
+
+    mov rax, sum_msg
     call _print
 
-    call _getNumber
-    mov rax, output_message
+    mov rax, [sum]
+    call _printRAX
+
+    jmp _exit
+
+_getArraySize:
+   mov rax, array_size_msg
+   call _print
+
+   mov rax, 0
+   mov rdi, 0
+   mov rsi, array_size
+   mov rdx, 2 ; number + '\n'
+   syscall
+
+   call _validateOverflow
+   call _transformNumber
+   ; assign number value to rax
+   movzx rax, byte [number]
+   mov rbx, 3 ; max value
+   mov rcx, 2 ; min value
+   call _isInRange
+   mov [array_size], [number]
+
+
+   ret
+
+_getArrayElements:
+    mov rbx, 0 ; counter
+
+
+_getArrayElementsLoop:
+    cmp r8, 0
+
+    ; ask for array element
+    mov rax, array_el_msg
     call _print
 
-    mov rax, 1
-    mov rdi, 1
-    mov rsi, number
-    mov rdx, rbx ; length of the string
+    ; read array element
+    mov rax, 0
+    mov rdi, 0
+    mov rsi, number_ascii
+    mov rdx, 2 ; number + '\n'
     syscall
 
-    call _exit
+    ; validate the input
+    call _validateOverflow
+    call _transformNumber
+
+    ; assign number value to rax
+    movzx rax, byte [number]
+    mov rbx, 5 ; max value
+    mov rcx, 0 ; min value
+    call _isInRange
+    mov [array + r8b], [number]
+
+    inc r8
+    cmp r8, array_size
+    jl _getArrayElementsLoop
+    ret
+
+
+_forEach:
+    mov r8, 0 ; counter
+    mov r9, [array_size] ; array size
+
+; rax - pointer to the subroutine
+_forEachLoop:
+    mov rdi, [array + r8]
+    call rax
+
+    inc r8
+    cmp r8, r9
+    jl _forEachLoop
+    ret
+
+; input: rdi - array element
+_sum:
+    add [sum], rdi
+    ret
+
 ; UTILS
 
 _print:
@@ -50,21 +130,7 @@ _printLoop:
     ret
 ; UTILS END
 
-_getNumber:
-    mov rax, 0
-    mov rdi, 0
-    mov rsi, number_ascii
-    mov rdx, 4
-    syscall
-
-    call _validateOverflow
-    call _transformNumber
-    call _isInRange
-    call _performSubtraction
-    call _convertToASCII
-    ret
 ; VALIDATION
-
 _validateOverflow:
     mov rax, number_ascii
     mov rbx, 0
@@ -75,7 +141,7 @@ _validateOverflow:
 _validateLoop:
     inc rax ; next char
     inc rbx ; length counter
-    cmp rbx, 4 ; max length of the string
+    cmp rbx, 2 ; max length of the string
     jge _invalidInput ; in case the string is too long (overflow)
     mov [input_length], rbx ; persist the length of the string
     mov cl, [rax] ; current char
@@ -83,6 +149,7 @@ _validateLoop:
     jne _validateLoop
     ret
 
+; will save the actual number in [number] variable
 _transformNumber:
     mov rdx, number_ascii ; pointer to the string
     mov rbx, 0 ; counter
@@ -158,65 +225,62 @@ _toPowerLoop:
 _toPowerEnd:
     ret
 
+;rax - current value,  rbx - max value, rcx - min value
 _isInRange:
-    ; assign number value to rax
-    movzx rax, byte [number]
-    cmp rax, 127
+    cmp rax, rbx
     jg _invalidInput
-    cmp rax, 88
+    cmp rax, rcx
     jl _invalidInput
     ret
 
-
 ; VALIDATION END
-
-; OPERATIONS
-_performSubtraction:
-    mov al, [number]
-    sub al, 23
-    mov [number], al
-    ret
-; OPERATIONS END
-
 ; TRANSFORMATION
-_convertToASCII:
-    movzx rax, byte [number]
-    mov rcx, 10 ; base
-    xor rbx, rbx ; index
 
-_convertLoop:
-    xor rdx, rdx ; clear rdx
-    div rcx ; rax = rax / rcx, rdx = rax % rcx
+_printRAX:
+    mov rcx, digitSpace
+    mov rbx, 10
+    mov [rcx], rbx
+    inc rcx
+    mov [digitSpacePos], rcx
 
-    add dl, '0' ; convert to ascii
-    mov [digits + rbx], dl ; store the digit
+; 123 / 10 = 12 remainder 3, store 3
+; 12 / 10 = 1 remainder 2, store 2
+; 1 / 10 = 0 remainder 1, store 1
+_printRAXLoop:
+    mov rdx, 0
+    mov rbx, 10
+    div rbx
+    push rax
+    add rdx, 48 ; convert the remainder to ASCII
 
-    inc rbx ; move to the next digit
+    mov rcx, [digitSpacePos]
+    mov [rcx], dl
+    inc rcx
+    mov [digitSpacePos], rcx
 
-    cmp rax, 0 ; check whether the number is 0
-    jne _convertLoop
+    pop rax
+    cmp rax, 0
+    jne _printRAXLoop
 
-    ; Reverse the order of digits in the digits buffer
-    mov rsi, rbx ; rsi = number of digits
-    mov rdi, 0 ; rdi = index
+_reverse:
+    mov rcx, [digitSpacePos]
 
-_reverseLoop:
-    dec rbx ; decrement index
-    mov dl, [digits + rbx] ; get the digit
-    mov [number + rdi], dl ; store the digit
-    inc rdi ; increment index
+    mov rax, 1
+    mov rdi, 1
+    mov rsi, rcx
+    mov rdx, 1
+    syscall
 
-    cmp rbx, 0 ; check whether the index is 0
-    jne _reverseLoop
+    mov rcx, [digitSpacePos]
+    dec rcx
+    mov [digitSpacePos], rcx
 
-    mov byte [number + rdi], 0x0A ; add new line
-    mov rbx, rdi ; rbx = length of the string
+    cmp rcx, digitSpace
+    jge _reverse
+
     ret
-
-
 
 ; TRANSFORMATION END
-
 ; TERMINATION
 
 _invalidInput:

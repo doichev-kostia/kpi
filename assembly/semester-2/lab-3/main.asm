@@ -1,10 +1,11 @@
 section .data
-    input_message db "Enter a number in range [127, 0]: ", 0
+    input_message db "Enter a number in range [127, -6]: ", 0
     output_message db "The number is: ", 0
     whole_str db "Whole number: ", 0
     numerator_str db "Numerator: ", 0
     denominator_str db "Denominator: ", 0
     invalid_input db "Invalid input!", 0
+    is_positive db 1
 
 section .bss
     number_ascii resb 4
@@ -36,7 +37,9 @@ _getNumber:
     syscall
 
     call _validateOverflow
+    call _validateSign
     call _transformNumber
+    call _applySign
     call _isInRange
     call _execFunction
 
@@ -104,10 +107,24 @@ _validateLoop:
     jne _validateLoop
     ret
 
+; void
+ _validateSign:
+    mov rax, number_ascii
+    mov cl, [rax]
+    cmp cl, 0x2D ; -
+    je _setNegative
+    ret
+
+; output: void
+_setNegative:
+    mov byte [is_positive], 0
+    ret
+
 _transformNumber:
     mov rdx, number_ascii ; pointer to the string
     mov rbx, 0 ; counter
     mov rdi, [input_length] ; number of ranks
+    call _handleNegative
     sub rdi, 1 ; decrease the number of ranks by 1, because the first rank is 10^0
 
 _transformLoop:
@@ -126,7 +143,7 @@ _transformLoop:
     ; add the current rank
     mov rdx, rax ; transform the number to rdx:rax
     ; move the number to rax
-    movzx rax, cl ; rax = cl
+    movsx rax, cl ; rax = cl
     mul rdx ; rax = rax * rdx
     add [number], rax ; add the current rank to the number
 
@@ -135,6 +152,16 @@ _transformLoop:
     mov rdx, number_ascii ; reset the pointer to the string
     cmp rdi, 0
     jge _transformLoop
+    ret
+
+_handleNegative:
+    cmp byte [is_positive], 0
+    je _handleNegativeEnd
+    ret
+
+_handleNegativeEnd:
+    sub rdi, 1 ; decrease the number of ranks by 1, because the first char is '-'
+    inc rbx ; skip '-'
     ret
 
 ; if (exp == 0) {
@@ -180,25 +207,34 @@ _toPowerEnd:
     ret
 
 _isInRange:
-    ; assign number value to rax
-    movzx rax, byte [number]
+    ; [-6, 127]
+    movsx rax, byte [number]
     cmp rax, 127
     jg _invalidInput
-    cmp rax, 0
+    cmp rax, -6
     jl _invalidInput
     ret
 
+_applySign:
+    cmp byte [is_positive], 0
+    je _applyNegative
+    ret
 
+_applyNegative:
+    mov al, byte [number]
+    neg al
+    mov [number], al
+    ret
 ; VALIDATION END
 
 ; OPERATIONS
 
-; if (x > 1 && x <= 20) {
-; 54 + x^2  / ( 1 + x )
-; } else if (x <= 1) {
-; 75x^2 - 17x
+; if (x > 0) {
+; 8x^2 + 36/x
+; } else if (-5 <= x && x <= 0) {
+; (1+x) / (1-x)
 ; } else {
-; 85x / ( 1 + x )
+; 10x^2
 ; }
 
 _handleDecimal:
@@ -213,98 +249,88 @@ _handleFraction:
 
 _execFunction:
     mov al, [number]   ; Load the value of x into AL
+    movsx rax, al   ; Load the value of x into AL
 
-    ; Check if x > 1
-    cmp al, 1
-    jle _lessThanOrEqual1
+    ; Check if x > 0
+    cmp rax, 0
+    jg _positive
 
-    ; Check if x <= 20
-    cmp al, 20
-    jg _greaterThan20
+    ; Check if -5 < x
+    cmp rax, -5
+    jl _negative
 
-    ; Code to execute if x > 1 && x <= 20
-    ; 54 + x^2  / ( 1 + x )
-
-    ; Compute x^2
-    movzx rax, al  ; Zero-extend AL to EAX
-    mul rax ; Square the value of x
-
-    mov rbx, rax
-
-    movzx rdx, byte [number]
+    ; if (-5 <= x && x <= 0)
+    ; (1 + x) / ( 1 - x )
 
     ; Compute (1 + x)
-    add rdx, 1
+    movsx rax, al  ; Zero-extend AL to EAX
+    ;persist x
+    mov rdx, rax
+    add rax, 1
 
-    ; Divide x^2 by (1 + x)
+    mov rbx, rax ; persist (1 + x)
+
+    ; Compute (1 - x)
+    mov rcx, 1
+    sub rcx, rdx
+
+    ; Compute (1 + x) / ( 1 - x )
+
     mov rax, rbx
-    mov rbx, rdx
-    xor rdx, rdx
-    div rbx
-
-    ; Add 54 to the result
-    add rax, 54
-
-    mov [whole_number], rax
-    call _handleDecimal
-
-    ret
-
-_lessThanOrEqual1:
-    ; Code to execute if x <= 1
-    ; 75x^2 - 17x
-
-    ; Compute x^2
-    movzx rax, al  ; Zero-extend AL to EAX
-    mul rax ; Square the value of x
-
-    ; Compute 75x^2
-    mov rbx, 75
-    mul rbx ; Multiply 75 by x^2
-
-    movzx rdx, byte [number]
-
-    ; persist 75x^2
-    mov rbx, rax
-
-    ; Compute 17x
-    mov rax, 17
-    mul rdx  ; Multiply 17 by x
-
-    ; Compute 75x^2 - 17x
-    sub rbx, rax
-
-    mov [whole_number], rax
-    call _handleDecimal
-
-    ret
-
-_greaterThan20:
-    ; Code to execute if x > 20
-    ; 85x / ( 1 + x )
-    ; Load the value of number into AL
-    mov al, [number]
-    movzx rax, al  ; Zero-extend AL to EAX
-
-    ; Compute (1 + x)
-    mov rcx, rax
-    add rcx, 1
-
-    ; Compute 85x
-    mov rbx, 85
-    mul rbx ; Multiply 85 by x
-
     mov rbx, rcx
     xor rdx, rdx ; clear rdx
-
-    ; Compute 85x / ( 1 + x )
-    div rbx ; Divide 85x by (1 + x)
+    div rbx
 
     mov [whole_number], rax
     call _handleDecimal
 
     ret
 
+_positive:
+    ; Code to execute if x > 0
+    ; 8x^2 + 36/x
+    ; Compute x^2
+    movsx rax, al  ; Zero-extend AL to RAX
+    mul rax ; Square the value of x
+
+    ; Compute 8x^2
+    mov rbx, 8
+    mul rbx ; Multiply 8 by x^2
+
+    movsx rbx, byte [number]
+
+    ; persist 8x^2
+    mov rcx, rax
+
+    ; Compute 36/x
+    mov rax, 36
+    xor rdx, rdx ; clear rdx
+    div rbx ; Divide 36 by x
+
+    ; Compute 8x^2 + 36/x
+    add rcx, rax
+
+    mov [whole_number], rcx
+    call _handleDecimal
+
+    ret
+
+
+_negative:
+    ; Code to execute if x < -5
+    ; 10x^2
+    ; Compute x^2
+    movsx rax, al  ; Zero-extend AL to EAX
+    mul rax ; Square the value of x
+
+    ; Compute 10x^2
+    mov rbx, 10
+    mul rbx ; Multiply 10 by x^2
+
+    mov [whole_number], rax
+    call _handleDecimal
+
+    ret
 ; OPERATIONS END
 
 

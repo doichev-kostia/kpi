@@ -40,7 +40,7 @@ _printRAX:
     inc rcx
     mov [digitSpacePos], rcx
 
-; 123 / 10 = 12 remoainder 3, store 3
+; 123 / 10 = 12 remainder 3, store 3
 ; 12 / 10 = 1 remainder 2, store 2
 ; 1 / 10 = 0 remainder 1, store 1
 _printRAXLoop:
